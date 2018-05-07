@@ -1,34 +1,51 @@
 <template>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <Header :title="appName"></Header>
-        <main class="mdl-layout__content">
-            <div class="app page-content">
-                <div class="input-tab mdl-card mdl-shadow--2dp">
-                    <RequestInfoForm :formData="inputData">
-                    </RequestInfoForm>
-                    <div>
-                        <HeaderForm :formData="addHeaderForm" @add-header="addRequestHeader" :requestHeaders="inputData.requestHeaders" @delete-header="deleteHeader">
-                        </HeaderForm>
-                    </div>
-                </div>
-                <div class="output-tab mdl-card mdl-shadow--2dp">
-                    <FetchCodeTab :inputData="inputData"></FetchCodeTab>
-                    <CurlCodeTab :inputData="inputData"></CurlCodeTab>
-                </div>
-            </div>
-        </main>
-    </div>
+    <md-content>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <md-toolbar class="md-primary">
+            <span class="md-title" style="flex: 1">{{appName}}</span>
+            <a href="https://github.com/pranayrauthu/fetcher" target="_blank" class="github-link">
+                <md-button>GitHub</md-button>
+            </a>
+        </md-toolbar>
+
+        <md-content class="app-container">
+            <md-content class="input-tab md-elevation-2">
+                <RequestInfoForm :formData="inputData"></RequestInfoForm>
+                <HeaderForm :formData="addHeaderForm" @add-header="addRequestHeader" :requestHeaders="inputData.requestHeaders" @delete-header="deleteHeader">
+                </HeaderForm>
+            </md-content>
+            <md-content class="output-tab md-elevation-2">
+                <md-tabs>
+                    <md-tab id="tab-fetch" md-label="Fetch">
+                        <FetchCodeTab :inputData="inputData"></FetchCodeTab>
+                    </md-tab>
+                    <md-tab id="tab-curl" md-label="cURL">
+                        <CurlCodeTab :inputData="inputData"></CurlCodeTab>
+                    </md-tab>
+                    <!-- <md-tab id="tab-csharp" md-label="C#">
+                        <CsharpCodeTab :inputData="inputData"></CsharpCodeTab>
+                    </md-tab>
+                    <md-tab id="tab-http" md-label="HTTP">
+                        <p>HTTP under progress..</p>
+                    </md-tab> -->
+                </md-tabs>
+            </md-content>
+        </md-content>
+
+    </md-content>
 </template>
 
 <script>
-import Header from "./components/Header.vue";
 import RequestInfoForm from "./components/RequestInfoForm.vue";
 import HeaderForm from "./components/HeaderForm.vue";
 import FetchCodeTab from "./components/FetchCodeTab.vue";
 import CurlCodeTab from "./components/CurlCodeTab.vue";
+import CsharpCodeTab from "./components/CsharpCodeTab.vue";
 
 export default {
-    data: function() {
+    data: function () {
         return {
             appName: "Fetcher",
             inputData: {
@@ -45,7 +62,7 @@ export default {
         };
     },
     methods: {
-        addRequestHeader: function({ headerKey, headerValue }) {
+        addRequestHeader: function ({ headerKey, headerValue }) {
             if (
                 !headerKey ||
                 !headerValue ||
@@ -62,7 +79,7 @@ export default {
             this.addHeaderForm.headerKey = "";
             this.addHeaderForm.headerValue = "";
         },
-        deleteHeader: function(header) {
+        deleteHeader: function (header) {
             if (!header) {
                 return;
             }
@@ -77,31 +94,38 @@ export default {
         }
     },
     components: {
-        Header,
         RequestInfoForm,
         HeaderForm,
         FetchCodeTab,
-        CurlCodeTab
+        CurlCodeTab,
+        CsharpCodeTab
     }
 };
 </script>
 
 <style>
 code {
-    white-space: pre-line;
+  white-space: pre-line;
+  word-wrap: break-word;
 }
 </style>
 
 
 <style scoped>
-.app {
-    display: flex;
+.app-container {
+  display: grid;
+  grid-template-columns: 30% auto;
+  grid-template-rows: auto;
+  grid-column-gap: 10px;
+  margin: 10px;
 }
 .input-tab,
 .output-tab {
-    margin: 20px;
-    padding: 30px;
-    width: 100%;
+  padding: 10px;
+  height: auto;
+}
+.github-link {
+  color: white;
 }
 </style>
 

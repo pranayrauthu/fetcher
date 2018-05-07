@@ -1,22 +1,22 @@
 <template>
-    <div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="url" id="fetchUrl" name="formData.fetchUrl" v-model="formData.fetchUrl">
-            <label class="mdl-textfield__label" for="fetchUrl">url</label>
-        </div>
-        <br/>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <label class="mdl-textfield__label" for="method">method: </label>
-            <select class="mdl-textfield__input" name="method" v-model="formData.method">
-                <option :value='httpMethod' :key="i" v-for="(httpMethod, i) in httpMethods">{{httpMethod}}</option>
-            </select>
-        </div>
-        <br/>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <textarea class="mdl-textfield__input" type="text" rows="10" id="requestBody" v-model.lazy="formData.requestBody"></textarea>
-            <label class="mdl-textfield__label" for="requestBody">body</label>
-        </div>
-    </div>
+  <div>
+    <md-field>
+      <label>url</label>
+      <md-input v-model="formData.fetchUrl"></md-input>
+    </md-field>
+    <br/>
+    <md-field>
+      <label for="method">method</label>
+      <md-select v-model="formData.method" name="method" id="method">
+        <md-option :value='httpMethod' :key="i" v-for="(httpMethod, i) in httpMethods">{{httpMethod}}</md-option>
+      </md-select>
+    </md-field>
+    <br/>
+    <md-field>
+      <label>body</label>
+      <md-textarea v-model="formData.requestBody" class="request-body"></md-textarea>
+    </md-field>
+  </div>
 </template>
 
 <script>
@@ -38,4 +38,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.request-body {
+  font-family: monospace;
+  font-size: 14px;
+}
+</style>
+
 

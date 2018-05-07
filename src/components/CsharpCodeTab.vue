@@ -1,9 +1,7 @@
 <template>
   <div class="csharp-tab">
-    <h2>C#</h2>
-    <pre>
-        <code>//enter your code</code>
-    </pre>
+    <div class="md-title">C#</div>
+    <p>C# not yet supported...</p>
   </div>
 </template>
 

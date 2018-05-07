@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.config.js",
+    "start": "webpack-dev-server --config webpack.config.js --mode=development",
     "build": "webpack --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vue": "^2.5.16"
+    "vue": "^2.5.16",
+    "vue-material": "^1.0.0-beta-8"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

@@ -1,29 +1,23 @@
 <template>
     <div>
         <div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input list="header-keys" class="mdl-textfield__input" type="text" id="headerKey" v-model="formData.headerKey">
-                <label class="mdl-textfield__label" for="headerKey">header key</label>
-                <datalist id="header-keys">
-                    <option :value="headerKey" v-for="(headerKey, index) in Object.keys(httpHeaders)" :key="index"></option>
-                </datalist>
-            </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input list="header-values" class="mdl-textfield__input" type="text" id="headerValue" v-model="formData.headerValue" />
-                <label class="mdl-textfield__label" for="headerValue">header value</label>
-                <datalist id="header-values">
-                    <option :value="headerVal" v-for="(headerVal, index) in httpHeaders[formData.headerKey]" :key="index"></option>
-                </datalist>
-            </div>
-            <button @click="$emit('add-header', formData)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">ADD</button>
+            <md-autocomplete v-model="formData.headerKey" :md-options="Object.keys(httpHeaders)" md-dense :md-open-on-focus="false">
+                <label>header key</label>
+            </md-autocomplete>
+            <md-autocomplete v-model="formData.headerValue" :md-options="httpHeaders[formData.headerKey] || []" md-dense :md-open-on-focus="false">
+                <label>header value</label>
+            </md-autocomplete>
+            <md-button @click="$emit('add-header', formData)" class="md-raised md-primary">ADD</md-button>
         </div>
         <div>
-            <ul @click="$emit('delete-header', $event.target.dataset.header)">
-                <li v-for="(value, key) in requestHeaders" :key="key">
+            <md-list @click="$emit('delete-header', $event.target.dataset.header)">
+                <md-list-item v-for="(value, key) in requestHeaders" :key="key">
                     '{{key}}': '{{value}}'
-                    <button :data-header='key' class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">delete</button>
-                </li>
-            </ul>
+                    <md-button class="md-icon-button">
+                        <md-icon class="fa fa-trash" :data-header='key'></md-icon>
+                    </md-button>
+                </md-list-item>
+            </md-list>
         </div>
     </div>
 </template>
@@ -81,15 +75,15 @@ export default {
                 'Accept-Charset': ['utf-8'],
                 'Accept-Encoding': ['gzip'],
                 'Accept-Language': ['en-US'],
-                'Accept-Datetime': [],
-                'Access-Control-Request-Method': [],
-                'Access-Control-Request-Headers': [],
-                'Authorization': [],
-                'Cache-Control': [],
+                'Accept-Datetime': [''],
+                'Access-Control-Request-Method': [''],
+                'Access-Control-Request-Headers': [''],
+                'Authorization': [''],
+                'Cache-Control': [''],
                 'Connection': ['keep-alive'],
-                'Cookie': [],
-                'Content-Length': [],
-                'Content-MD5': [],
+                'Cookie': [''],
+                'Content-Length': [''],
+                'Content-MD5': [''],
                 'Content-Type': [
                     'application/javascript',
                     'application/json',
@@ -118,27 +112,27 @@ export default {
                     'image/jpeg',
                     'image/gif'
                 ],
-                'Date': [],
-                'Expect': [],
-                'Forwarded': [],
-                'From': [],
-                'Host': [],
-                'If-Match': [],
-                'If-Modified-Since': [],
-                'If-None-Match': [],
-                'If-Range': [],
-                'If-Unmodified-Since': [],
-                'Max-Forwards': [],
-                'Origin': [],
+                'Date': [''],
+                'Expect': [''],
+                'Forwarded': [''],
+                'From': [''],
+                'Host': [''],
+                'If-Match': [''],
+                'If-Modified-Since': [''],
+                'If-None-Match': [''],
+                'If-Range': [''],
+                'If-Unmodified-Since': [''],
+                'Max-Forwards': [''],
+                'Origin': [''],
                 'Pragma': ['no-cache'],
-                'Proxy-Authorization': [],
-                'Range': [],
-                'Referer': [],
-                'TE': [],
-                'User-Agent': [],
-                'Upgrade': [],
-                'Via': [],
-                'Warning': []
+                'Proxy-Authorization': [''],
+                'Range': [''],
+                'Referer': [''],
+                'TE': [''],
+                'User-Agent': [''],
+                'Upgrade': [''],
+                'Via': [''],
+                'Warning': ['']
             }
         }
     }

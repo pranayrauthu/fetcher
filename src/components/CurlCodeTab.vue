@@ -1,15 +1,14 @@
 <template>
     <div class="curl-tab">
-        <h4>cURL</h4>
-        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="insecure-check">
-            <input type="checkbox" id="insecure-check" class="mdl-checkbox__input" v-model="isInsecure">
-            <span class="mdl-checkbox__label">insecure</span>
-        </label>
-        <pre>
-            <code>
-                curl{{computedInsecureStr}}-X{{ inputData.method }}{{computedHeadersStr}}-d '{{ inputData.requestBody }}' '{{ inputData.fetchUrl }}'
-            </code>
-        </pre>
+        <div class="md-title">cURL</div>
+        <md-checkbox v-model="isInsecure">insecure</md-checkbox>
+        <md-content class="md-elevation-1">
+            <pre class="output-code">
+                <code @click="selectCodeBlock" contenteditable="true">
+                    curl{{computedInsecureStr}}-X{{ inputData.method }}{{computedHeadersStr}}-d '{{ inputData.requestBody }}' '{{ inputData.fetchUrl }}'
+                </code>
+            </pre>
+        </md-content>
     </div>
 </template>
 
@@ -48,8 +47,24 @@ export default {
             }
             return " ";
         }
+    },
+    methods: {
+        selectCodeBlock: function (event) {
+            event.target.focus();
+            const range = document.createRange();
+            range.selectNodeContents(event.target);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        }
     }
 };
 </script>
+
+<style scoped>
+.output-code {
+  padding: 10px;
+  overflow: visible;
+}
+</style>
 
 
