@@ -6,7 +6,14 @@
         <md-toolbar class="md-primary">
             <span class="md-title" style="flex: 1">{{appName}}</span>
             <a href="https://github.com/pranayrauthu/fetcher" target="_blank" class="github-link">
-                <md-button>GitHub</md-button>
+                <md-button class="md-icon-button">
+                    <md-icon class="fa fa-github"></md-icon>
+                </md-button>
+            </a>
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fpranayrauthu%2Ffetcher&via=pranay_rauthu&text=generate%20HTTP%20request%20code%20with&hashtags=fetcher" target="_blank">
+                <md-button class="md-icon-button">
+                    <md-icon class="fa fa-share-alt"></md-icon>
+                </md-button>
             </a>
         </md-toolbar>
 
