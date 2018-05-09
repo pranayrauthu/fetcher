@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "jest",
     "start": "webpack-dev-server --config webpack.config.js --mode=development",
     "build": "webpack --config webpack.config.js"
   },
@@ -15,16 +16,37 @@
     "vue-material": "^1.0.0-beta-8"
   },
   "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.15",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "css-loader": "^0.28.11",
+    "jest": "^22.4.3",
+    "jest-serializer-vue": "^1.0.0",
     "vue-html-loader": "^1.2.4",
+    "vue-jest": "^2.5.0",
     "vue-loader": "^15.0.9",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.7.0",
     "webpack-cli": "^2.1.2",
     "webpack-dev-server": "^3.1.4"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    },
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/jest-serializer-vue"
+    ]
   }
 }

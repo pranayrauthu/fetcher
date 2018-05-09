@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <md-toolbar class="md-primary">
-            <span class="md-title" style="flex: 1">{{appName}}</span>
+            <span class="md-title app-title" style="flex: 1">{{appName}}</span>
             <a href="https://github.com/pranayrauthu/fetcher" target="_blank" class="github-link">
                 <md-button class="md-icon-button">
                     <md-icon class="fa fa-github"></md-icon>
@@ -54,7 +54,7 @@ import CsharpCodeTab from "./components/CsharpCodeTab.vue";
 export default {
     data: function () {
         return {
-            appName: "Fetcher",
+            appName: "Fetcher (beta)",
             inputData: {
                 method: "GET",
                 fetchUrl: "",
@@ -119,11 +119,13 @@ code {
 
 
 <style scoped>
+
 .app-container {
   display: grid;
   grid-template-columns: 30% auto;
   grid-template-rows: auto;
   grid-column-gap: 10px;
+  grid-row-gap: 10px;
   margin: 10px;
 }
 .input-tab,
@@ -134,6 +136,13 @@ code {
 .github-link {
   color: white;
 }
+
+@media only screen and (max-width:800px) { 
+	.app-container {
+        grid-template-columns: auto;
+    }
+}
+
 </style>
 
 

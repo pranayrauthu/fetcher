@@ -5,7 +5,7 @@
         <md-content class="md-elevation-1">
             <pre class="output-code">
                 <code @click="selectCodeBlock" contenteditable="true">
-                    curl{{computedInsecureStr}}-X{{ inputData.method }}{{computedHeadersStr}}-d '{{ inputData.requestBody }}' '{{ inputData.fetchUrl }}'
+                    curl{{computedInsecureStr}}-X{{ inputData.method }}{{computedHeadersStr}}{{ computedRequestBodyStr }}'{{ inputData.fetchUrl }}'
                 </code>
             </pre>
         </md-content>
@@ -17,31 +17,39 @@ export default {
     props: {
         inputData: {
             type: Object,
-            default: function() {
+            default: function () {
                 return {};
             }
         }
     },
-    data: function() {
+    data: function () {
         return {
             isInsecure: false
         };
     },
     computed: {
-        computedHeadersStr: function() {
+        computedHeadersStr: function () {
             const headers = Object.keys(this.inputData.requestHeaders);
             if (headers.length > 0) {
                 let returnStr = " ";
                 headers.forEach(h => {
                     returnStr += `-H '${h}: ${
                         this.inputData.requestHeaders[h]
-                    }' `;
+                        }' `;
                 });
                 return returnStr;
             }
             return " ";
         },
-        computedInsecureStr: function() {
+        computedRequestBodyStr: function () {
+            let retStr = '';
+            const { requestBody } = this.inputData
+            if (requestBody && requestBody !== '') {
+                retStr = `-d '${requestBody}' `;
+            }
+            return retStr;
+        },
+        computedInsecureStr: function () {
             if (this.isInsecure) {
                 return " --insecure ";
             }
