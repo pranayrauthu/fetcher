@@ -71,7 +71,6 @@ export default {
 <style scoped>
 .output-code {
   padding: 10px;
-  overflow: visible;
 }
 </style>
 

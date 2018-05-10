@@ -1,12 +1,13 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 
 import VueMaterial from 'vue-material';
+import AsyncComputed from "vue-async-computed";
 import app from './../../src/app.vue';
-import RequestInfoForm from './../../src/components/RequestInfoForm.vue'
 
 
 const localVue = createLocalVue();
 localVue.use(VueMaterial);
+localVue.use(AsyncComputed);
 
 describe('curl code tab', () => {
 

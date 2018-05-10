@@ -9,24 +9,17 @@ const localVue = createLocalVue();
 localVue.use(VueMaterial);
 localVue.use(AsyncComputed);
 
-describe('fetch code tab', () => {
+describe('http code tab', () => {
 
-    it('fetch code tab should render properly', () => {
+    it('http code tab should render properly', () => {
         const wrapper = mount(app, {
             localVue
         });
-        const fetchCode = wrapper.find('.fetch-tab .output-code code').text();
-        expect(fetchCode).toBe(
-`fetch('', {
-  "method": "GET",
-  "headers": {}
-}).then(function(resp){
-                    console.log(resp);
-                });`
-        );
+        const httpCode = wrapper.find('.http-tab .output-code code').text();
+        expect(httpCode).toBe(`GET  HTTP/1.1`);
     });
-
-    it('fetch code tab should process url correctly', () => {
+    
+    it('curl code tab should process url correctly', () => {
         const wrapper = mount(app, {
             data:{
                 appName: "Fetcher (beta)",
@@ -44,15 +37,8 @@ describe('fetch code tab', () => {
             },
             localVue
         });
-        const fetchCode = wrapper.find('.fetch-tab .output-code code').text();
-        expect(fetchCode).toBe(
-`fetch('https://github.com/pranayrauthu/fetcher', {
-  "method": "GET",
-  "headers": {}
-}).then(function(resp){
-                    console.log(resp);
-                });`
-        );
+        const curlCode = wrapper.find('.http-tab .output-code code').text();
+        expect(curlCode).toBe(`GET https://github.com/pranayrauthu/fetcher HTTP/1.1`);
     });
-
+    
 })

@@ -33,10 +33,10 @@
                     </md-tab>
                     <!-- <md-tab id="tab-csharp" md-label="C#">
                         <CsharpCodeTab :inputData="inputData"></CsharpCodeTab>
-                    </md-tab>
-                    <md-tab id="tab-http" md-label="HTTP">
-                        <p>HTTP under progress..</p>
                     </md-tab> -->
+                    <md-tab id="tab-http" md-label="HTTP">
+                        <HttpCodeTab :inputData="inputData"></HttpCodeTab>
+                    </md-tab> 
                 </md-tabs>
             </md-content>
         </md-content>
@@ -50,6 +50,7 @@ import HeaderForm from "./components/HeaderForm.vue";
 import FetchCodeTab from "./components/FetchCodeTab.vue";
 import CurlCodeTab from "./components/CurlCodeTab.vue";
 import CsharpCodeTab from "./components/CsharpCodeTab.vue";
+import HttpCodeTab from "./components/HttpCodeTab.vue";
 
 export default {
     data: function () {
@@ -105,7 +106,8 @@ export default {
         HeaderForm,
         FetchCodeTab,
         CurlCodeTab,
-        CsharpCodeTab
+        CsharpCodeTab,
+        HttpCodeTab
     }
 };
 </script>

@@ -1,5 +1,14 @@
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
+const plugins = [new VueLoaderPlugin()];
+if(process.env.mode === 'production'){
+    plugins.push(new BundleAnalyzerPlugin());
+    plugins.push(new UglifyJsPlugin());
+}
+
 
 module.exports = {
     entry: './src/app.js',
@@ -27,9 +36,7 @@ module.exports = {
         }]
     },
 
-    plugins: [
-        new VueLoaderPlugin()
-    ],
+    plugins: plugins,
 
     devServer: {
         contentBase: path.join(__dirname, "dist"),
