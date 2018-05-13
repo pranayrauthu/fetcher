@@ -31,9 +31,9 @@
                     <md-tab id="tab-curl" md-label="cURL">
                         <CurlCodeTab :inputData="inputData"></CurlCodeTab>
                     </md-tab>
-                    <!-- <md-tab id="tab-csharp" md-label="C#">
+                    <md-tab id="tab-csharp" md-label="C#">
                         <CsharpCodeTab :inputData="inputData"></CsharpCodeTab>
-                    </md-tab> -->
+                    </md-tab>
                     <md-tab id="tab-http" md-label="HTTP">
                         <HttpCodeTab :inputData="inputData"></HttpCodeTab>
                     </md-tab> 
@@ -113,6 +113,9 @@ export default {
 </script>
 
 <style>
+body{
+    overflow-x: hidden;
+}
 code {
   white-space: pre-line;
   word-wrap: break-word;
