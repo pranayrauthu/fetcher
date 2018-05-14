@@ -13,12 +13,13 @@
         </span>
         <md-content class="md-elevation-1">
             <pre class="output-code">
-                <code @click="selectCodeBlock" contenteditable="true">
+                <code contenteditable="true" ref="outputCodeNode">
                     fetch('{{ inputData.fetchUrl }}', {{optionsJSONStr}}){{ processJSONStr }}.then(function(resp){
                         console.log(resp);
                     });
                 </code>
             </pre>
+            <md-button class="md-primary" @click="$emit('copy-output-code', $refs['outputCodeNode'])">copy</md-button>
         </md-content>
     </div>
 </template>
@@ -64,24 +65,6 @@ export default {
                 retObj.mode = this.selectedMode;
             }
             return retObj;
-        }
-    },
-    methods: {
-        selectCodeBlock: function (event) {
-            event.target.focus();
-            const range = document.createRange();
-            range.selectNodeContents(event.target);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(window.getSelection())
-                    .then(() => {
-                        // console.log('Text copied to clipboard');
-                    })
-                    .catch(err => {
-                        // console.error('Could not copy text: ', err);
-                    });
-            }
         }
     }
 };

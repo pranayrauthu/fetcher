@@ -4,10 +4,11 @@
         <md-checkbox v-model="isInsecure">insecure</md-checkbox>
         <md-content class="md-elevation-1">
             <pre class="output-code">
-                <code @click="selectCodeBlock" contenteditable="true">
+                <code contenteditable="true" ref="outputCodeNode">
                     curl{{computedInsecureStr}}-X{{ inputData.method }}{{computedHeadersStr}}{{ computedRequestBodyStr }}'{{ inputData.fetchUrl }}'
                 </code>
             </pre>
+            <md-button class="md-primary" @click="$emit('copy-output-code', $refs['outputCodeNode'])">copy</md-button>
         </md-content>
     </div>
 </template>
@@ -54,15 +55,6 @@ export default {
                 return " --insecure ";
             }
             return " ";
-        }
-    },
-    methods: {
-        selectCodeBlock: function (event) {
-            event.target.focus();
-            const range = document.createRange();
-            range.selectNodeContents(event.target);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
         }
     }
 };

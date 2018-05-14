@@ -26,16 +26,16 @@
             <md-content class="output-tab md-elevation-2">
                 <md-tabs>
                     <md-tab id="tab-fetch" md-label="Fetch">
-                        <FetchCodeTab :inputData="inputData"></FetchCodeTab>
+                        <FetchCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></FetchCodeTab>
                     </md-tab>
                     <md-tab id="tab-curl" md-label="cURL">
-                        <CurlCodeTab :inputData="inputData"></CurlCodeTab>
+                        <CurlCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></CurlCodeTab>
                     </md-tab>
                     <md-tab id="tab-csharp" md-label="C#">
-                        <CsharpCodeTab :inputData="inputData"></CsharpCodeTab>
+                        <CsharpCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></CsharpCodeTab>
                     </md-tab>
                     <md-tab id="tab-http" md-label="HTTP">
-                        <HttpCodeTab :inputData="inputData"></HttpCodeTab>
+                        <HttpCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></HttpCodeTab>
                     </md-tab> 
                 </md-tabs>
             </md-content>
@@ -99,6 +99,28 @@ export default {
                 delete newHeaders[header];
                 this.inputData.requestHeaders = newHeaders;
             }
+        },
+        copyOutputCode: function (node) {
+            if(!node){
+                return;
+            }
+            node.focus();
+            const range = document.createRange();
+            range.selectNodeContents(node);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            if(navigator.clipboard){
+                navigator.clipboard.writeText(node.innerHTML)
+                .then(() => {
+                    console.log('Text copied to clipboard');
+                    // TODO: Need to add snackbar notification.
+                })
+                .catch(err => {
+                    // This can happen if the user denies clipboard permissions:
+                    console.error('Could not copy text: ', err);
+                });
+            }
+            // TODO: Handle old browsers
         }
     },
     components: {
