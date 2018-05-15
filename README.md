@@ -8,6 +8,7 @@ generate HTTP request code for various languages. try it for free [here](https:/
 
 - JavaScript Fetch
 - cURL
+- C#
 
 **License**
 

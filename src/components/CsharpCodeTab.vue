@@ -54,7 +54,7 @@ export default {
                                 }) || [''])
                                     .join('')
                                 }
-                                var response = httpClient.${this.computedHttpMethodStr}StringAsync(new Uri(url)${this.computedHttpBodyStr}).Result;
+                                var response = httpClient.${this.computedHttpMethodStr}StringAsync(new Uri("${this.inputData.fetchUrl}")${this.computedHttpBodyStr}).Result;
                                 // your code
                             }
                         }

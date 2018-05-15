@@ -1,5 +1,5 @@
 {
-  "name": "vuesample",
+  "name": "fetcher",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,7 +14,7 @@
   "dependencies": {
     "vue": "^2.5.16",
     "vue-async-computed": "^3.3.1",
-    "vue-material": "^1.0.0-beta-8"
+    "vue-material": "^1.0.0-beta-10.1"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.15",
