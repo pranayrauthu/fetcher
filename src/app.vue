@@ -1,6 +1,9 @@
 <template>
     <md-content>
 
+        <!-- font-awesome icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
         <md-toolbar class="md-primary">
             <span class="md-title app-title" style="flex: 1">{{appName}}</span>
             <a href="https://github.com/pranayrauthu/fetcher" target="_blank" class="github-link">
@@ -39,7 +42,7 @@
             </md-content>
         </md-content>
 
-        <md-snackbar :md-position="center" :md-duration="2000" :md-active.sync="showSnackbar" md-persistent>
+        <md-snackbar :md-position="'center'" :md-duration="2000" :md-active.sync="showSnackbar" md-persistent>
             <span>text copied to clipboard.</span>
             <md-button class="md-primary" @click="showSnackbar = false">close</md-button>
         </md-snackbar>
