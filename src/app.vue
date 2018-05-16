@@ -1,8 +1,6 @@
 <template>
     <md-content>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
         <md-toolbar class="md-primary">
             <span class="md-title app-title" style="flex: 1">{{appName}}</span>
             <a href="https://github.com/pranayrauthu/fetcher" target="_blank" class="github-link">
@@ -36,10 +34,15 @@
                     </md-tab>
                     <md-tab id="tab-http" md-label="HTTP">
                         <HttpCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></HttpCodeTab>
-                    </md-tab> 
+                    </md-tab>
                 </md-tabs>
             </md-content>
         </md-content>
+
+        <md-snackbar :md-position="center" :md-duration="2000" :md-active.sync="showSnackbar" md-persistent>
+            <span>text copied to clipboard.</span>
+            <md-button class="md-primary" @click="showSnackbar = false">close</md-button>
+        </md-snackbar>
 
     </md-content>
 </template>
@@ -66,6 +69,7 @@ export default {
                 headerKey: "",
                 headerValue: ""
             },
+            showSnackbar: false,
             yourCode: "// enter your code"
         };
     },
@@ -101,7 +105,7 @@ export default {
             }
         },
         copyOutputCode: function (node) {
-            if(!node){
+            if (!node) {
                 return;
             }
             node.focus();
@@ -109,16 +113,14 @@ export default {
             range.selectNodeContents(node);
             window.getSelection().removeAllRanges();
             window.getSelection().addRange(range);
-            if(navigator.clipboard){
+            if (navigator.clipboard) {
                 navigator.clipboard.writeText(node.innerHTML)
-                .then(() => {
-                    console.log('Text copied to clipboard');
-                    // TODO: Need to add snackbar notification.
-                })
-                .catch(err => {
-                    // This can happen if the user denies clipboard permissions:
-                    console.error('Could not copy text: ', err);
-                });
+                    .then(() => {
+                        this.showSnackbar = true;
+                    })
+                    .catch(err => {
+                        console.error('Could not copy text: ', err);
+                    });
             }
             // TODO: Handle old browsers
         }
@@ -135,8 +137,8 @@ export default {
 </script>
 
 <style>
-body{
-    overflow-x: hidden;
+body {
+  overflow-x: hidden;
 }
 code {
   white-space: pre-line;
@@ -146,7 +148,6 @@ code {
 
 
 <style scoped>
-
 .app-container {
   display: grid;
   grid-template-columns: 30% auto;
@@ -164,12 +165,11 @@ code {
   color: white;
 }
 
-@media only screen and (max-width:800px) { 
-	.app-container {
-        grid-template-columns: auto;
-    }
+@media only screen and (max-width: 800px) {
+  .app-container {
+    grid-template-columns: auto;
+  }
 }
-
 </style>
 
 

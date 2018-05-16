@@ -10,7 +10,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "vue": "^2.5.16",
     "vue-async-computed": "^3.3.1",
