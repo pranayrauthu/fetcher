@@ -1,15 +1,15 @@
 {
   "name": "fetcher",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "http request code generator.",
   "main": "index.js",
   "scripts": {
     "test": "jest",
     "start": "webpack-dev-server --config webpack.config.js --mode=development",
     "build": "webpack --config webpack.config.js --mode=production"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["http"],
+  "author": "Pranay Rauthu <pranay.rauthu@gmail.com> (https://twitter.com/pranay_rauthu)",
   "license": "MIT",
   "dependencies": {
     "vue": "^2.5.16",

@@ -2,6 +2,7 @@
     <div class="fetch-tab">
         <div class="md-title">JavaScript - fetch</div>
         <md-checkbox v-model="processJSON">process JSON</md-checkbox>
+        <md-checkbox v-model="useAsyncAwait">use async-await</md-checkbox>
         <span>
             <md-checkbox v-model="enableMode">add mode</md-checkbox>
             <md-field>
@@ -13,10 +14,11 @@
         </span>
         <md-content class="md-elevation-1">
             <pre class="output-code">
-                <code contenteditable="true" ref="outputCodeNode">
-                    fetch('{{ inputData.fetchUrl }}', {{optionsJSONStr}}){{ processJSONStr }}.then(function(resp){
-                        console.log(resp);
-                    });
+                <code contenteditable="true" ref="outputCodeNode" v-if="!useAsyncAwait">
+                    {{ fetchCodeStr }}
+                </code>
+                <code contenteditable="true" ref="outputCodeNode" v-if="useAsyncAwait">
+                    {{ fetchCodeWithAsyncAwaitStr }}
                 </code>
             </pre>
             <md-button class="md-primary" @click="$emit('copy-output-code', $refs['outputCodeNode'])">copy</md-button>
@@ -37,6 +39,7 @@ export default {
     data: function () {
         return {
             processJSON: false,
+            useAsyncAwait: false,
             enableMode: false,
             modeOptions: ["same-origin", "no-cors", "cors", "navigate"],
             selectedMode: "cors"
@@ -64,7 +67,24 @@ export default {
             if (this.enableMode) {
                 retObj.mode = this.selectedMode;
             }
-            return retObj;
+            return JSON.stringify(retObj);
+        },
+        fetchCodeStr: function () {
+            return `
+                fetch('${this.inputData.fetchUrl}', ${this.optionsJSONStr})${ this.processJSONStr }.then(function(resp){
+                    console.log(resp);
+                });
+            `;
+        },
+        fetchCodeWithAsyncAwaitStr: function () {
+            if(this.processJSON){
+                return `
+                    const resp = await (await fetch('${this.inputData.fetchUrl}', ${this.optionsJSONStr})).json();
+                `;
+            }
+            return `
+                const resp = await fetch('${this.inputData.fetchUrl}', ${this.optionsJSONStr});
+            `;
         }
     }
 };

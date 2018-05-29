@@ -15,14 +15,10 @@ describe('fetch code tab', () => {
         const wrapper = mount(app, {
             localVue
         });
-        const fetchCode = wrapper.find('.fetch-tab .output-code code').text();
-        expect(fetchCode).toBe(
-`fetch('', {
-  "method": "GET",
-  "headers": {}
-}).then(function(resp){
-                    console.log(resp);
-                });`
+        let fetchCode = wrapper.find('.fetch-tab .output-code code').text();
+        fetchCode = fetchCode.split(' ').join('');
+        fetchCode = fetchCode.split('\n').join('');
+        expect(fetchCode).toBe(`fetch('',{"method":"GET","headers":{}}).then(function(resp){console.log(resp);});`
         );
     });
 
@@ -44,15 +40,10 @@ describe('fetch code tab', () => {
             },
             localVue
         });
-        const fetchCode = wrapper.find('.fetch-tab .output-code code').text();
-        expect(fetchCode).toBe(
-`fetch('https://github.com/pranayrauthu/fetcher', {
-  "method": "GET",
-  "headers": {}
-}).then(function(resp){
-                    console.log(resp);
-                });`
-        );
+        let fetchCode = wrapper.find('.fetch-tab .output-code code').text();
+        fetchCode = fetchCode.split(' ').join('');
+        fetchCode = fetchCode.split('\n').join('');
+        expect(fetchCode).toBe(`fetch('https://github.com/pranayrauthu/fetcher',{"method":"GET","headers":{}}).then(function(resp){console.log(resp);});`);
     });
 
 })
