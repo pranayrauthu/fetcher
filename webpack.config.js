@@ -5,9 +5,11 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 
 const plugins = [new VueLoaderPlugin()];
+let { NODE_ENV } = process.env;
+NODE_ENV = NODE_ENV.trim();
 let STATIC_JSON_DATA_URL = '/data/httpHeaders.json';
 
-if(process.env.mode === 'production'){
+if(NODE_ENV === 'production'){
     plugins.push(new BundleAnalyzerPlugin());
     plugins.push(new UglifyJsPlugin());
     STATIC_JSON_DATA_URL = '/fetcher/data/httpHeaders.json';
@@ -50,5 +52,7 @@ module.exports = {
         contentBase: path.join(__dirname, "dist"),
         compress: true,
         port: 9000
-    }
+    },
+
+    mode: NODE_ENV
 };
