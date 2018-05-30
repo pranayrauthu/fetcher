@@ -2,12 +2,20 @@ const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack');
 
 const plugins = [new VueLoaderPlugin()];
+let STATIC_JSON_DATA_URL = '/data/httpHeaders.json';
+
 if(process.env.mode === 'production'){
     plugins.push(new BundleAnalyzerPlugin());
     plugins.push(new UglifyJsPlugin());
+    STATIC_JSON_DATA_URL = '/fetcher/data/httpHeaders.json';
 }
+
+plugins.push(new webpack.DefinePlugin({
+    STATIC_JSON_DATA_URL: JSON.stringify(STATIC_JSON_DATA_URL)
+}));
 
 
 module.exports = {

@@ -45,7 +45,7 @@ export default {
         httpHeaders: {
             lazy: true,
             get(){
-                return fetch('/data/httpHeaders.json').then(resp => resp.json());
+                return fetch(STATIC_JSON_DATA_URL).then(resp => resp.json());
             },
             default: []
         }
