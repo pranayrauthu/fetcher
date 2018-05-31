@@ -153,7 +153,7 @@ code {
 <style scoped>
 .app-container {
   display: grid;
-  grid-template-columns: 30% auto;
+  grid-template-columns: 30% 70%;
   grid-template-rows: auto;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
@@ -170,7 +170,7 @@ code {
 
 @media only screen and (max-width: 800px) {
   .app-container {
-    grid-template-columns: auto;
+    grid-template-columns: 100%;
   }
 }
 </style>
