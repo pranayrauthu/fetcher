@@ -17,14 +17,25 @@
           "url": "https://pranayrauthu.github.io/fetcher/"
         }
     </script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120605918-1"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
 
-        gtag('config', 'UA-120605918-1');
+        (function (window, document) {
+            var host = window.location.host;
+            if (host.split(':')[0] != 'localhost') {
+                var googleAnalyticsScriptTag = document.createElement('script');
+                googleAnalyticsScriptTag.setAttribute('async', 'true');
+                googleAnalyticsScriptTag.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=UA-120605918-1');
+                document.head.appendChild(googleAnalyticsScriptTag);
+                (function () {
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag() { dataLayer.push(arguments); }
+                    gtag('js', new Date());
+
+                    gtag('config', 'UA-120605918-1');
+                })();
+            }
+        })(window, document);
+
     </script>
 
 </head>
