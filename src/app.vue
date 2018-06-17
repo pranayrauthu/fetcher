@@ -107,17 +107,9 @@ export default {
                 this.inputData.requestHeaders = newHeaders;
             }
         },
-        copyOutputCode: function (node) {
-            if (!node) {
-                return;
-            }
-            node.focus();
-            const range = document.createRange();
-            range.selectNodeContents(node);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
+        copyOutputCode: function (copyText) {
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(node.innerHTML)
+                navigator.clipboard.writeText(copyText)
                     .then(() => {
                         this.showSnackbar = true;
                     })

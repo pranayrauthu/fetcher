@@ -3,9 +3,8 @@
         <div class="md-title">cURL</div>
         <md-checkbox v-model="isInsecure">insecure</md-checkbox>
         <md-content class="md-elevation-1">
-            <pre class="output-code">
-                <codemirror :value="computedCurlCode" :options="editorOptions"></codemirror>
-            </pre>
+            <codemirror :value="computedCurlCode" :options="editorOptions"></codemirror>
+            <md-button class="md-primary" @click="$emit('copy-output-code', computedCurlCode)">copy</md-button>
         </md-content>
     </div>
 </template>

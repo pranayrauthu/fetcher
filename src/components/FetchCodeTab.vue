@@ -14,6 +14,7 @@
         </span>
         <md-content class="md-elevation-1">
             <codemirror :value="fetchCodeStr" :options="editorOptions"></codemirror>
+            <md-button class="md-primary" @click="$emit('copy-output-code', fetchCodeStr)">copy</md-button>
         </md-content>
     </div>
 </template>

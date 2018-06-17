@@ -2,9 +2,8 @@
     <div class="http-tab">
         <div class="md-title">HTTP</div>
         <md-content class="md-elevation-1">
-            <pre class="output-code">
-                <codemirror :value="outputCodeStr" :options="editorOptions"></codemirror>
-          </pre>
+            <codemirror :value="outputCodeStr" :options="editorOptions"></codemirror>
+            <md-button class="md-primary" @click="$emit('copy-output-code', outputCodeStr)">copy</md-button>
         </md-content>
     </div>
 </template>
