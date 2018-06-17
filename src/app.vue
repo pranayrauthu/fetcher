@@ -140,13 +140,19 @@ export default {
 </script>
 
 <style>
+
 body {
   overflow-x: hidden;
 }
-code {
-  white-space: pre-line;
-  word-wrap: break-word;
+
+.CodeMirror{
+    height: 400px;
 }
+
+.CodeMirror pre{
+    font-family: 'Source Code Pro', Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
 </style>
 
 

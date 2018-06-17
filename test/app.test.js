@@ -1,20 +1,25 @@
-import { createLocalVue, mount } from '@vue/test-utils';
+const regeneratorRuntime = require("regenerator-runtime");
+const puppeteer = require('puppeteer');
 
-import VueMaterial from 'vue-material';
-import AsyncComputed from "vue-async-computed";
-import app from './../src/app.vue';
+let browser, page;
+beforeAll(async () => {
 
+    browser = await puppeteer.launch({
+        headless: false,
+    });
+    page = await browser.newPage();
+    await page.goto('http://localhost:9000/');
 
-const localVue = createLocalVue();
-localVue.use(VueMaterial);
-localVue.use(AsyncComputed);
-const wrapper = mount(app, {
-    localVue
-});
+}, 30000)
 
-describe('app', () => {
-    it('app should render title properly', () => {
-        const appTitle = wrapper.find('.app-title').text();
-        expect(appTitle).toBe('Fetcher (beta)');
-    })
+test('app should render title properly', async () => {
+
+    await page.waitForSelector('.app-title');
+    const appTitle = await page.$eval('.app-title', e => e.innerHTML);
+    expect(appTitle).toBe('Fetcher (beta)');
+
+}, 30000);
+
+afterAll(() => {
+    browser.close();
 })

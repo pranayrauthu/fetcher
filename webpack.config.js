@@ -8,15 +8,18 @@ const plugins = [new VueLoaderPlugin()];
 let { NODE_ENV } = process.env;
 NODE_ENV = NODE_ENV.trim();
 let STATIC_JSON_DATA_URL = '/data/httpHeaders.json';
+let IS_PROD = false;
 
 if(NODE_ENV === 'production'){
     plugins.push(new BundleAnalyzerPlugin());
     plugins.push(new UglifyJsPlugin());
     STATIC_JSON_DATA_URL = '/fetcher/data/httpHeaders.json';
+    IS_PROD = true;
 }
 
 plugins.push(new webpack.DefinePlugin({
-    STATIC_JSON_DATA_URL: JSON.stringify(STATIC_JSON_DATA_URL)
+    STATIC_JSON_DATA_URL: JSON.stringify(STATIC_JSON_DATA_URL),
+    IS_PROD: JSON.stringify(IS_PROD)
 }));
 
 

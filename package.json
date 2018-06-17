@@ -4,20 +4,21 @@
   "description": "http request code generator.",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --maxWorkers=4",
     "start": "SET NODE_ENV=development && webpack-dev-server --config webpack.config.js",
     "build": "SET NODE_ENV=production && webpack --config webpack.config.js"
   },
-  "keywords": ["http"],
+  "keywords": [
+    "http"
+  ],
   "author": "Pranay Rauthu <pranay.rauthu@gmail.com> (https://twitter.com/pranay_rauthu)",
   "license": "MIT",
   "dependencies": {
     "vue": "^2.5.16",
-    "vue-async-computed": "^3.3.1",
+    "vue-codemirror-lite": "^1.0.4",
     "vue-material": "^1.0.0-beta-10.1"
   },
   "devDependencies": {
-    "@vue/test-utils": "^1.0.0-beta.15",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
@@ -25,6 +26,8 @@
     "jest": "^22.4.3",
     "jest-fetch-mock": "^1.5.0",
     "jest-serializer-vue": "^1.0.0",
+    "puppeteer": "^1.5.0",
+    "regenerator-runtime": "^0.11.1",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "vue-html-loader": "^1.2.4",
     "vue-jest": "^2.5.0",
@@ -37,22 +40,6 @@
     "webpack-dev-server": "^3.1.4"
   },
   "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "vue"
-    ],
-    "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
-      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
-    },
-    "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1"
-    },
-    "snapshotSerializers": [
-      "<rootDir>/node_modules/jest-serializer-vue"
-    ],
-    "automock": false,
     "setupFiles": [
       "./setupJest.js"
     ]

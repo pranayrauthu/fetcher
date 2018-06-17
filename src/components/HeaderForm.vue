@@ -41,14 +41,19 @@ export default {
             }
         }
     },
-    asyncComputed: {
-        httpHeaders: {
-            lazy: true,
-            get(){
-                return fetch(STATIC_JSON_DATA_URL).then(resp => resp.json());
-            },
-            default: []
+    data: function () {
+        return {
+            httpHeaders: []
         }
+    },
+    mounted: function () {
+        fetch(STATIC_JSON_DATA_URL)
+        .then(resp => resp.json())
+        .then(resp => {
+            this.httpHeaders = resp;
+        }).catch(err => {
+            // console.log(err);
+        });
     }
 }
 </script>

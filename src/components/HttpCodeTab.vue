@@ -3,18 +3,19 @@
         <div class="md-title">HTTP</div>
         <md-content class="md-elevation-1">
             <pre class="output-code">
-                <code contenteditable="true" ref="outputCodeNode">
-                    {{ outputCodeStr }}
-                </code>
+                <codemirror :value="outputCodeStr" :options="editorOptions"></codemirror>
           </pre>
-          <md-button class="md-primary" @click="$emit('copy-output-code', $refs['outputCodeNode'])">copy</md-button>
         </md-content>
     </div>
 </template>
 
 
 <script>
+
+require('codemirror/mode/http/http');
+
 export default {
+    name: 'HttpCodeTab',
     props: {
         inputData: {
             type: Object,
@@ -23,21 +24,27 @@ export default {
             }
         }
     },
+    data: function () {
+        return {
+            editorOptions: {
+                mode: 'message/http',
+                tabSize: 2,
+                lineWrapping: true,
+                lineNumbers: true,
+                autoRefresh: true
+            }
+        }
+    },
     computed: {
         outputCodeStr: function () {
-            return `${this.inputData.method} ${this.inputData.fetchUrl} HTTP/1.1
-            ${this.computedHeadersStr}
-
-            ${this.inputData.requestBody}
-            `;
+            return `${this.inputData.method} ${this.inputData.fetchUrl} HTTP/1.1\n${this.computedHeadersStr}\n\n${this.inputData.requestBody}`;
         },
         computedHeadersStr: function () {
             const headers = Object.keys(this.inputData.requestHeaders);
             if (headers.length > 0) {
                 let returnStr = "";
                 headers.forEach(h => {
-                    returnStr += `${h}: ${this.inputData.requestHeaders[h]}
-                    `;
+                    returnStr += `${h}: ${this.inputData.requestHeaders[h]}\n`;
                 });
                 return returnStr;
             }

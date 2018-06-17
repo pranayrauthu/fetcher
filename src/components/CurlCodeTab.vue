@@ -4,17 +4,18 @@
         <md-checkbox v-model="isInsecure">insecure</md-checkbox>
         <md-content class="md-elevation-1">
             <pre class="output-code">
-                <code contenteditable="true" ref="outputCodeNode">
-                    curl{{computedInsecureStr}}-X{{ inputData.method }}{{computedHeadersStr}}{{ computedRequestBodyStr }}'{{ inputData.fetchUrl }}'
-                </code>
+                <codemirror :value="computedCurlCode" :options="editorOptions"></codemirror>
             </pre>
-            <md-button class="md-primary" @click="$emit('copy-output-code', $refs['outputCodeNode'])">copy</md-button>
         </md-content>
     </div>
 </template>
 
 <script>
+
+require('codemirror/mode/shell/shell');
+
 export default {
+    name: 'CurlCodeTab',
     props: {
         inputData: {
             type: Object,
@@ -25,7 +26,14 @@ export default {
     },
     data: function () {
         return {
-            isInsecure: false
+            isInsecure: false,
+            editorOptions: {
+                mode: 'text/x-sh',
+                tabSize: 2,
+                lineWrapping: true,
+                lineNumbers: true,
+                autoRefresh: true
+            }
         };
     },
     computed: {
@@ -55,6 +63,9 @@ export default {
                 return " --insecure ";
             }
             return " ";
+        },
+        computedCurlCode: function () {
+            return `curl${this.computedInsecureStr}-X${this.inputData.method}${this.computedHeadersStr}${this.computedRequestBodyStr}'${this.inputData.fetchUrl}'`;
         }
     }
 };

@@ -13,21 +13,17 @@
             </md-field>
         </span>
         <md-content class="md-elevation-1">
-            <pre class="output-code">
-                <code contenteditable="true" ref="outputCodeNode" v-if="!useAsyncAwait">
-                    {{ fetchCodeStr }}
-                </code>
-                <code contenteditable="true" ref="outputCodeNode" v-if="useAsyncAwait">
-                    {{ fetchCodeWithAsyncAwaitStr }}
-                </code>
-            </pre>
-            <md-button class="md-primary" @click="$emit('copy-output-code', $refs['outputCodeNode'])">copy</md-button>
+            <codemirror :value="fetchCodeStr" :options="editorOptions"></codemirror>
         </md-content>
     </div>
 </template>
 
 <script>
+
+require('codemirror/mode/javascript/javascript');
+
 export default {
+    name: 'FetchCodeTab',
     props: {
         inputData: {
             type: Object,
@@ -42,15 +38,21 @@ export default {
             useAsyncAwait: false,
             enableMode: false,
             modeOptions: ["same-origin", "no-cors", "cors", "navigate"],
-            selectedMode: "cors"
+            selectedMode: "cors",
+            editorOptions: {
+                mode: 'text/javascript',
+                viewportMargin: Infinity,
+                tabSize: 2,
+                lineWrapping: true,
+                lineNumbers: true,
+                autoRefresh: true
+            }
         };
     },
     computed: {
         processJSONStr: function () {
             if (this.processJSON) {
-                return `.then(function(resp){
-                        return resp.json();
-                    })`;
+                return `.then(function(resp){\n\treturn resp.json();\n})`;
             }
             return "";
         },
@@ -67,32 +69,21 @@ export default {
             if (this.enableMode) {
                 retObj.mode = this.selectedMode;
             }
-            return JSON.stringify(retObj);
+            return JSON.stringify(retObj, null, 2);
         },
         fetchCodeStr: function () {
-            return `
-                fetch('${this.inputData.fetchUrl}', ${this.optionsJSONStr})${ this.processJSONStr }.then(function(resp){
-                    console.log(resp);
-                });
-            `;
+            if(this.useAsyncAwait){
+                return this.fetchCodeWithAsyncAwaitStr;
+            }
+            return `fetch('${this.inputData.fetchUrl}', ${this.optionsJSONStr})${this.processJSONStr}.then(function(resp){\n\tconsole.log(resp);\n});`;
         },
         fetchCodeWithAsyncAwaitStr: function () {
             if(this.processJSON){
-                return `
-                    const resp = await (await fetch('${this.inputData.fetchUrl}', ${this.optionsJSONStr})).json();
-                `;
+                return `const resp = await (await fetch('${this.inputData.fetchUrl}', ${this.optionsJSONStr})).json();`;
             }
-            return `
-                const resp = await fetch('${this.inputData.fetchUrl}', ${this.optionsJSONStr});
-            `;
+            return `const resp = await fetch('${this.inputData.fetchUrl}', ${this.optionsJSONStr});`;
         }
     }
 };
 </script>
 
-
-<style scoped>
-.output-code {
-  padding: 10px;
-}
-</style>
