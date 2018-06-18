@@ -16,7 +16,7 @@
   "dependencies": {
     "vue": "^2.5.16",
     "vue-codemirror-lite": "^1.0.4",
-    "vue-material": "^1.0.0-beta-10.1"
+    "vue-material": "^1.0.0-beta-10.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

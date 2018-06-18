@@ -1,13 +1,13 @@
 <template>
   <div>
-    <md-field>
+    <md-field class="fetch-url-input">
       <label>url</label>
       <md-input v-model="formData.fetchUrl"></md-input>
     </md-field>
     <br/>
     <md-field>
       <label for="method">method</label>
-      <md-select v-model="formData.method" name="method" id="method">
+      <md-select v-model="formData.method" name="method" id="method" class="http-method-input">
         <md-option :value='httpMethod' :key="i" v-for="(httpMethod, i) in httpMethods">{{httpMethod}}</md-option>
       </md-select>
     </md-field>

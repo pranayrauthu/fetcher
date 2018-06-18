@@ -1,13 +1,13 @@
 <template>
     <div>
         <div>
-            <md-autocomplete v-model="formData.headerKey" :md-options="Object.keys(httpHeaders)" md-dense :md-open-on-focus="false">
+            <md-autocomplete v-model="formData.headerKey" :md-options="Object.keys(httpHeaders)" md-dense :md-open-on-focus="false" class="header-key-input">
                 <label>header key</label>
             </md-autocomplete>
-            <md-autocomplete v-model="formData.headerValue" :md-options="httpHeaders[formData.headerKey] || []" md-dense :md-open-on-focus="false">
+            <md-autocomplete v-model="formData.headerValue" :md-options="httpHeaders[formData.headerKey] || []" md-dense :md-open-on-focus="false" class="header-value-input">
                 <label>header value</label>
             </md-autocomplete>
-            <md-button @click="$emit('add-header', formData)" class="md-raised md-primary">ADD</md-button>
+            <md-button @click="$emit('add-header', formData)" class="md-raised md-primary add-header-btn">ADD</md-button>
         </div>
         <div>
             <md-list @click="$emit('delete-header', $event.target.dataset.header)">
@@ -48,12 +48,12 @@ export default {
     },
     mounted: function () {
         fetch(STATIC_JSON_DATA_URL)
-        .then(resp => resp.json())
-        .then(resp => {
-            this.httpHeaders = resp;
-        }).catch(err => {
-            // console.log(err);
-        });
+            .then(resp => resp.json())
+            .then(resp => {
+                this.httpHeaders = resp;
+            }).catch(err => {
+                // console.log(err);
+            });
     }
 }
 </script>
