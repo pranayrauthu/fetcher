@@ -26,7 +26,7 @@
             </md-content>
             <md-content class="output-tab md-elevation-2">
                 <md-tabs>
-                    <md-tab id="tab-fetch" md-label="Fetch">
+                    <md-tab id="tab-fetch" md-label="JavaScript">
                         <FetchCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></FetchCodeTab>
                     </md-tab>
                     <md-tab id="tab-curl" md-label="cURL">
@@ -37,6 +37,9 @@
                     </md-tab>
                     <md-tab id="tab-http" md-label="HTTP">
                         <HttpCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></HttpCodeTab>
+                    </md-tab>
+                    <md-tab id="tab-powershell" md-label="PowerShell">
+                        <PowerShellCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></PowerShellCodeTab>
                     </md-tab>
                 </md-tabs>
             </md-content>
@@ -57,6 +60,7 @@ import FetchCodeTab from "./components/FetchCodeTab.vue";
 import CurlCodeTab from "./components/CurlCodeTab.vue";
 import CsharpCodeTab from "./components/CsharpCodeTab.vue";
 import HttpCodeTab from "./components/HttpCodeTab.vue";
+import PowerShellCodeTab from "./components/PowerShellCodeTab.vue";
 
 export default {
     data: function () {
@@ -126,7 +130,8 @@ export default {
         FetchCodeTab,
         CurlCodeTab,
         CsharpCodeTab,
-        HttpCodeTab
+        HttpCodeTab,
+        PowerShellCodeTab
     }
 };
 </script>

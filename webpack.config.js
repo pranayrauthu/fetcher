@@ -2,6 +2,7 @@ const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 const webpack = require('webpack');
 
 const plugins = [new VueLoaderPlugin()];
@@ -13,6 +14,7 @@ let IS_PROD = false;
 if(NODE_ENV === 'production'){
     plugins.push(new BundleAnalyzerPlugin());
     plugins.push(new UglifyJsPlugin());
+    plugins.push(new CompressionPlugin);
     STATIC_JSON_DATA_URL = '/fetcher/data/httpHeaders.json';
     IS_PROD = true;
 }

@@ -39,29 +39,18 @@ export default {
         computedHeadersStr: function () {
             const headers = Object.keys(this.inputData.requestHeaders);
             if (headers.length > 0) {
-                let returnStr = " ";
-                headers.forEach(h => {
-                    returnStr += `-H '${h}: ${
-                        this.inputData.requestHeaders[h]
-                        }' `;
-                });
-                return returnStr;
+                return headers.reduce((accumulator, currentValue) => (
+                    accumulator + `-H '${currentValue}: ${this.inputData.requestHeaders[currentValue]}' `
+                ), ' ');
             }
-            return " ";
+            return ' ';
         },
         computedRequestBodyStr: function () {
-            let retStr = '';
-            const { requestBody } = this.inputData
-            if (requestBody && requestBody !== '') {
-                retStr = `-d '${requestBody}' `;
-            }
-            return retStr;
+            const { requestBody } = this.inputData;
+            return (requestBody) ? (`-d '${requestBody}' `) : ('');
         },
         computedInsecureStr: function () {
-            if (this.isInsecure) {
-                return " --insecure ";
-            }
-            return " ";
+            return (this.isInsecure) ? (' --insecure ') : (' ');
         },
         computedCurlCode: function () {
             return `curl${this.computedInsecureStr}-X${this.inputData.method}${this.computedHeadersStr}${this.computedRequestBodyStr}'${this.inputData.fetchUrl}'`;

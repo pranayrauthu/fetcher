@@ -22,6 +22,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
+    "compression-webpack-plugin": "^1.1.11",
     "css-loader": "^0.28.11",
     "jest": "^22.4.3",
     "jest-fetch-mock": "^1.5.0",
