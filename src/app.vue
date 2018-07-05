@@ -41,6 +41,9 @@
                     <md-tab id="tab-powershell" md-label="PowerShell">
                         <PowerShellCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></PowerShellCodeTab>
                     </md-tab>
+                    <md-tab id="tab-java" md-label="Java">
+                        <JavaCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></JavaCodeTab>
+                    </md-tab>
                 </md-tabs>
             </md-content>
         </md-content>
@@ -61,6 +64,7 @@ import CurlCodeTab from "./components/CurlCodeTab.vue";
 import CsharpCodeTab from "./components/CsharpCodeTab.vue";
 import HttpCodeTab from "./components/HttpCodeTab.vue";
 import PowerShellCodeTab from "./components/PowerShellCodeTab.vue";
+import JavaCodeTab from "./components/JavaCodeTab.vue";
 
 export default {
     data: function () {
@@ -131,7 +135,8 @@ export default {
         CurlCodeTab,
         CsharpCodeTab,
         HttpCodeTab,
-        PowerShellCodeTab
+        PowerShellCodeTab,
+        JavaCodeTab
     }
 };
 </script>
