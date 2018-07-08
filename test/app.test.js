@@ -12,11 +12,11 @@ beforeAll(async () => {
 
 }, 30000)
 
-test('app should render title properly', async () => {
+test('app should render logo properly', async () => {
 
-    await page.waitForSelector('.app-title');
-    const appTitle = await page.$eval('.app-title', e => e.innerHTML);
-    expect(appTitle).toBe('Fetcher (beta)');
+    await page.waitForSelector('.app-logo');
+    const applogo = !!(await page.$('.app-logo'));
+    expect(applogo).toBe(true);
 
 }, 30000);
 

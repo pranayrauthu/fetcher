@@ -6,7 +6,7 @@
 
     <md-toolbar class="md-primary app-header">
       <span class="app-logo">
-        <md-icon md-src="/assets/app-logo.svg" />
+        <md-icon :md-src="appLogo" />
       </span>
       <a href="https://github.com/pranayrauthu/fetcher" target="_blank" class="github-link">
         <md-button class="md-icon-button">
