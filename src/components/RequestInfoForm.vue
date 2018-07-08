@@ -39,7 +39,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .request-body {
   font-family: monospace;
   font-size: 14px;

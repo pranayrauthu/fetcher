@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 484.5 139.775">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #fff;
+        stroke-width: 8px;
+      }
+
+      .cls-2 {
+        fill: rgba(255,255,255,0);
+      }
+    </style>
+  </defs>
+  <g id="Symbol_1_1" data-name="Symbol 1 – 1" transform="translate(131 41.5)">
+    <line id="Line_1" data-name="Line 1" class="cls-1" x2="48" transform="translate(-100.5 8.5)"/>
+    <path id="Path_5" data-name="Path 5" class="cls-2" d="M0,0H48" transform="translate(36.5 9.5)"/>
+    <line id="Line_2" data-name="Line 2" class="cls-1" y2="98" transform="matrix(0.985, 0.174, -0.174, 0.985, -67.991, -40.756)"/>
+    <line id="Line_10" data-name="Line 10" class="cls-1" x1="11.509" y2="88.256" transform="translate(52.991 -37.5)"/>
+    <line id="Line_6" data-name="Line 6" class="cls-1" y1="43.004" x2="8" transform="translate(-26.5 6.5)"/>
+    <line id="Line_32" data-name="Line 32" class="cls-1" y1="43.004" transform="matrix(0.985, 0.174, -0.174, 0.985, 255.234, 6.827)"/>
+    <line id="Line_20" data-name="Line 20" class="cls-1" y1="43.004" x2="8" transform="translate(-26.5 6.5)"/>
+    <path id="Path_6" data-name="Path 6" class="cls-2" d="M8,0" transform="translate(247.5 6.5)"/>
+    <line id="Line_16" data-name="Line 16" class="cls-1" y1="43.004" x2="8" transform="translate(-26.5 6.5)"/>
+    <line id="Line_21" data-name="Line 21" class="cls-1" y1="43.004" x2="8" transform="translate(-26.5 6.5)"/>
+    <line id="Line_12" data-name="Line 12" class="cls-1" y1="43.004" x2="8" transform="translate(113.5 6.5)"/>
+    <line id="Line_36" data-name="Line 36" class="cls-1" y1="49" transform="matrix(0.985, 0.174, -0.174, 0.985, 323.754, 7.872)"/>
+    <line id="Line_19" data-name="Line 19" class="cls-1" y1="82" transform="matrix(0.985, 0.174, -0.174, 0.985, 230.234, 16.827)"/>
+    <line id="Line_17" data-name="Line 17" class="cls-1" y1="92" transform="matrix(0.985, 0.174, -0.174, 0.985, 193.62, -33.877)"/>
+    <line id="Line_8" data-name="Line 8" class="cls-1" y1="18" x2="4" transform="translate(19.5 12.5)"/>
+    <line id="Line_25" data-name="Line 25" class="cls-1" y1="18" transform="matrix(0.985, 0.174, -0.174, 0.985, 297.626, 12.637)"/>
+    <line id="Line_3" data-name="Line 3" class="cls-1" x2="50" transform="translate(-72.5 -37.5)"/>
+    <line id="Line_5" data-name="Line 5" class="cls-1" x2="50" transform="translate(-22.5 9.5)"/>
+    <line id="Line_28" data-name="Line 28" class="cls-1" x2="50" transform="translate(251.5 9.5)"/>
+    <line id="Line_22" data-name="Line 22" class="cls-1" x2="50" transform="translate(-22.5 9.5)"/>
+    <line id="Line_29" data-name="Line 29" class="cls-1" x2="50" transform="translate(251.5 9.5)"/>
+    <line id="Line_15" data-name="Line 15" class="cls-1" x2="50" transform="translate(-22.5 9.5)"/>
+    <line id="Line_30" data-name="Line 30" class="cls-1" x2="50" transform="translate(251.5 9.5)"/>
+    <line id="Line_23" data-name="Line 23" class="cls-1" x2="50" transform="translate(-22.5 9.5)"/>
+    <line id="Line_31" data-name="Line 31" class="cls-1" x2="50" transform="translate(251.5 9.5)"/>
+    <line id="Line_13" data-name="Line 13" class="cls-1" x2="46" transform="translate(117.5 9.5)"/>
+    <line id="Line_37" data-name="Line 37" class="cls-1" x2="34" transform="translate(319.5 10.5)"/>
+    <line id="Line_18" data-name="Line 18" class="cls-1" x2="50" transform="translate(184.5 13.5)"/>
+    <path id="Path_1" data-name="Path 1" class="cls-2" d="M4,0H50" transform="translate(-26.5 27.5)"/>
+    <path id="Path_3" data-name="Path 3" class="cls-2" d="M4,0H50" transform="translate(247.5 27.5)"/>
+    <path id="Path_2" data-name="Path 2" class="cls-2" d="M4,0H50" transform="translate(-26.5 27.5)"/>
+    <path id="Path_4" data-name="Path 4" class="cls-2" d="M4,0H51" transform="translate(247.5 27.5)"/>
+    <line id="Line_7" data-name="Line 7" class="cls-1" x2="50" transform="translate(-30.5 52.5)"/>
+    <line id="Line_26" data-name="Line 26" class="cls-1" x2="50" transform="translate(243.5 52.5)"/>
+    <line id="Line_24" data-name="Line 24" class="cls-1" x2="50" transform="translate(-30.5 52.5)"/>
+    <line id="Line_27" data-name="Line 27" class="cls-1" x2="50" transform="translate(243.5 52.5)"/>
+    <line id="Line_14" data-name="Line 14" class="cls-1" x2="50" transform="translate(109.5 52.5)"/>
+    <line id="Line_4" data-name="Line 4" class="cls-1" x2="50" transform="translate(-131 52.5)"/>
+    <line id="Line_11" data-name="Line 11" class="cls-1" x2="50" transform="translate(49 52.5)"/>
+  </g>
+</svg>

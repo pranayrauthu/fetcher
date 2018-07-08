@@ -54,7 +54,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .output-code {
   padding: 10px;
 }
