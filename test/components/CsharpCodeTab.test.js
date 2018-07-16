@@ -19,7 +19,6 @@ beforeEach(async () => {
 
 test('CsharpCodeTab should render on load', async () => {
 
-    await page.waitForSelector('.csharp-tab .CodeMirror-line');
     const codeSnippet = await commonInputs.getCodeSnippet(page, 'csharp');
     expect(codeSnippet).toBe(`using System;using System.Net.Http;​namespace Fetcher{  class Program  {    static void Main(string[] args)    {      using (var httpClient = new HttpClient())      {                var response = httpClient.GetStringAsync(new Uri("")).Result;        // your code​      }    }  }}`);
     

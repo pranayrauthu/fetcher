@@ -7,7 +7,7 @@ let browser, page;
 beforeAll(async () => {
 
     browser = await puppeteer.launch({
-        headless: true,
+        headless: false,
     });
     page = await browser.newPage();
     
@@ -19,22 +19,24 @@ beforeEach(async () => {
 
 test('fetchCodeTab should render on load', async () => {
 
-    await page.waitForSelector('.fetch-tab .CodeMirror-line');
+    // await commonInputs.clickTab(page, 'fetch');
     const codeSnippet = await commonInputs.getCodeSnippet(page, 'fetch');
     expect(codeSnippet).toBe(`fetch('', {  "method": "GET",  "headers": {}}).then(function(resp){  console.log(resp);});`);
     
 }, 30000);
 
 test('fetchCodeTab should render GET request code', async () => {
-
+    
+    // await commonInputs.clickTab(page, 'fetch');
     await commonInputs.enterSampleGETRequestInput(page);
     let codeSnippet = await commonInputs.getCodeSnippet(page, 'fetch');
     expect(codeSnippet).toBe(`fetch('https://jsonplaceholder.typicode.com/posts/1', {  "method": "GET",  "headers": {    "Accept": "application/json"  }}).then(function(resp){  console.log(resp);});`);
-
+    
 }, 30000);
 
 test('fetchCodeTab should render POST request code', async () => {
-
+    
+    // await commonInputs.clickTab(page, 'fetch');
     await commonInputs.enterSamplePOSTRequestInput(page);
     let codeSnippet = await commonInputs.getCodeSnippet(page, 'fetch');
     expect(codeSnippet).toBe(`fetch('https://jsonplaceholder.typicode.com/posts', {  "method": "POST",  "headers": {    "Accept": "application/json"  },  "body": "{\\\"title\\\":\\\"foo\\\",\\\"body\\\":\\\"bar\\\",\\\"userId\\\":1}"}).then(function(resp){  console.log(resp);});`);

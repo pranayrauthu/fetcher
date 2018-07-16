@@ -1,27 +1,31 @@
 {
   "name": "fetcher",
-  "version": "1.1.2",
+  "version": "1.2.2",
   "description": "http request code generator.",
   "main": "index.js",
   "scripts": {
     "test": "jest --maxWorkers=4",
-    "start": "SET NODE_ENV=development && webpack-dev-server --config webpack.config.js",
-    "build": "SET NODE_ENV=production && webpack --config webpack.config.js",
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "start": "webpack-dev-server --config webpack.config.js --mode development",
+    "build": "webpack --config webpack.config.js --mode production"
   },
   "keywords": [
-    "http"
+    "http",
+    "curl",
+    "fetch"
   ],
   "author": "Pranay Rauthu <pranay.rauthu@gmail.com> (https://twitter.com/pranay_rauthu)",
   "license": "MIT",
   "dependencies": {
     "vue": "^2.5.16",
     "vue-codemirror-lite": "^1.0.4",
-    "vue-material": "^1.0.0-beta-10.2"
+    "vue-material": "^1.0.0-beta-10.2",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
+    "@types/puppeteer": "^1.5.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-preset-env": "^1.6.1",
     "compression-webpack-plugin": "^1.1.11",
     "css-loader": "^0.28.11",

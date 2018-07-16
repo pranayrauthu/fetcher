@@ -19,7 +19,6 @@ beforeEach(async () => {
 
 test('CurlCodeTab should render on load', async () => {
 
-    await page.waitForSelector('.curl-tab .CodeMirror-line');
     const codeSnippet = await commonInputs.getCodeSnippet(page, 'curl');
     expect(codeSnippet).toBe(`curl -XGET ''`);
     

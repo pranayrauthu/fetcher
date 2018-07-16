@@ -1,21 +1,18 @@
 <template>
   <md-content>
 
-    <!-- font-awesome icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <md-toolbar class="md-primary app-header">
       <span class="app-logo">
         <md-icon :md-src="appLogo" />
       </span>
       <a href="https://github.com/pranayrauthu/fetcher" target="_blank" class="github-link">
         <md-button class="md-icon-button">
-          <md-icon class="fa fa-github"></md-icon>
+          <md-icon :md-src="githubLogo"></md-icon>
         </md-button>
       </a>
       <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fpranayrauthu%2Ffetcher&via=pranay_rauthu&text=generate%20HTTP%20request%20code%20with&hashtags=fetcher" target="_blank">
         <md-button class="md-icon-button">
-          <md-icon class="fa fa-share-alt"></md-icon>
+          <md-icon :md-src="shareIcon"></md-icon>
         </md-button>
       </a>
     </md-toolbar>
@@ -27,26 +24,22 @@
         </HeaderForm>
       </md-content>
       <md-content class="output-tab md-elevation-2">
-        <md-tabs>
-          <md-tab id="tab-fetch" md-label="JavaScript">
-            <FetchCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></FetchCodeTab>
+        <md-tabs :md-active-tab="'tab-'+$route.path.slice(1)">
+          <md-tab id="tab-fetch" md-label="JavaScript" to="/fetch">
           </md-tab>
-          <md-tab id="tab-curl" md-label="cURL">
-            <CurlCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></CurlCodeTab>
+          <md-tab id="tab-curl" md-label="cURL" to="/curl">
           </md-tab>
-          <md-tab id="tab-csharp" md-label="C#">
-            <CsharpCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></CsharpCodeTab>
+          <md-tab id="tab-csharp" md-label="C#" to="/csharp">
           </md-tab>
-          <md-tab id="tab-http" md-label="HTTP">
-            <HttpCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></HttpCodeTab>
+          <md-tab id="tab-http" md-label="HTTP" to="/http">
           </md-tab>
-          <md-tab id="tab-powershell" md-label="PowerShell">
-            <PowerShellCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></PowerShellCodeTab>
+          <md-tab id="tab-powershell" md-label="PowerShell" to="/powershell">
           </md-tab>
-          <md-tab id="tab-java" md-label="Java">
-            <JavaCodeTab :inputData="inputData" @copy-output-code="copyOutputCode"></JavaCodeTab>
+          <md-tab id="tab-java" md-label="Java" to="/java">
           </md-tab>
         </md-tabs>
+        <hr>
+        <router-view :inputData="inputData" @copy-output-code="copyOutputCode" class="current-code-component"></router-view>
       </md-content>
     </md-content>
 
@@ -61,18 +54,14 @@
 <script>
 import RequestInfoForm from "./components/RequestInfoForm.vue";
 import HeaderForm from "./components/HeaderForm.vue";
-import FetchCodeTab from "./components/FetchCodeTab.vue";
-import CurlCodeTab from "./components/CurlCodeTab.vue";
-import CsharpCodeTab from "./components/CsharpCodeTab.vue";
-import HttpCodeTab from "./components/HttpCodeTab.vue";
-import PowerShellCodeTab from "./components/PowerShellCodeTab.vue";
-import JavaCodeTab from "./components/JavaCodeTab.vue";
 
 export default {
   data: function () {
     return {
       appName: "Fetcher",
-      appLogo: STATIC_APP_LOGO_URL,
+      appLogo: STATIC_ICONS_BASE + 'app-logo.svg',
+      shareIcon: STATIC_ICONS_BASE + 'share2.svg',
+      githubLogo: STATIC_ICONS_BASE + 'github.svg',
       inputData: {
         method: "GET",
         fetchUrl: "",
@@ -134,12 +123,6 @@ export default {
   components: {
     RequestInfoForm,
     HeaderForm,
-    FetchCodeTab,
-    CurlCodeTab,
-    CsharpCodeTab,
-    HttpCodeTab,
-    PowerShellCodeTab,
-    JavaCodeTab
   }
 };
 </script>
@@ -150,6 +133,7 @@ export default {
 @include md-register-theme("default", (primary: #ff4500, accent: #1a11e8));
 
 @import "~vue-material/dist/theme/all"; // Apply the theme
+
 body {
   overflow-x: hidden;
   .CodeMirror {
@@ -160,10 +144,15 @@ body {
     }
   }
 }
+
 </style>
 
 <style lang="scss" scoped>
 .app-header {
+  position: fixed;
+  top: 0;
+  z-index: 6;
+
   .app-logo {
     margin: auto;
     margin-left: 5px;
@@ -181,11 +170,18 @@ body {
   grid-column-gap: 10px;
   grid-row-gap: 10px;
   margin: 10px;
+  margin-top: 80px;
 
   .input-tab,
   .output-tab {
     padding: 10px;
     height: auto;
+  }
+
+  .output-tab {
+    .current-code-component{
+      margin-top: 15px;
+    }
   }
 
   .github-link {

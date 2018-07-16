@@ -17,26 +17,28 @@ import 'vue-material/dist/vue-material.min.css';
 
 require('codemirror/addon/display/autorefresh');
 
-Vue.use(VueCodeMirror);
+[
+	VueCodeMirror,
+	MdButton,
+	MdContent,
+	MdTabs,
+	MdToolbar,
+	MdIcon,
+	MdSnackbar,
+	MdField,
+	MdCheckbox,
+	MdAutocomplete,
+	MdMenu,
+	MdList,
+].forEach(c => Vue.use(c));
 
-Vue.use(MdButton);
-Vue.use(MdContent);
-Vue.use(MdTabs);
-Vue.use(MdToolbar);
-Vue.use(MdIcon);
-Vue.use(MdSnackbar);
-Vue.use(MdField);
-Vue.use(MdCheckbox);
-Vue.use(MdAutocomplete);
-Vue.use(MdMenu);
-Vue.use(MdList);
-
-
+import router from './router';
 import app from './app.vue';
 
 
 const APP = new Vue({
 	el: '#fetcher-app',
+	router,
 	render: h => h(app)
 });
 

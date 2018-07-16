@@ -20,7 +20,6 @@ beforeEach(async () => {
 
 test('HttpCodeTab should render on load', async () => {
 
-    await page.waitForSelector('.http-tab .CodeMirror-line');
     const codeSnippet = await commonInputs.getCodeSnippet(page, 'http');
     expect(codeSnippet).toBe(`GET  HTTP/1.1​​​`);
     

@@ -1,10 +1,10 @@
 <template>
     <div>
         <div>
-            <md-autocomplete v-model="formData.headerKey" :md-options="Object.keys(httpHeaders)" md-dense :md-open-on-focus="false" class="header-key-input">
+            <md-autocomplete v-model="formData.headerKey" :md-options="Object.keys(httpHeaders)" md-dense class="header-key-input">
                 <label>header key</label>
             </md-autocomplete>
-            <md-autocomplete v-model="formData.headerValue" :md-options="httpHeaders[formData.headerKey] || []" md-dense :md-open-on-focus="false" class="header-value-input">
+            <md-autocomplete v-model="formData.headerValue" :md-options="httpHeaders[formData.headerKey] || []" md-dense class="header-value-input">
                 <label>header value</label>
             </md-autocomplete>
             <md-button @click="$emit('add-header', formData)" class="md-raised md-primary add-header-btn">ADD</md-button>
@@ -14,7 +14,9 @@
                 <md-list-item v-for="(value, key) in requestHeaders" :key="key">
                     '{{key}}': '{{value}}'
                     <md-button class="md-icon-button">
-                        <md-icon class="fa fa-trash" :data-header='key'></md-icon>
+                        <span :data-header='key'>
+                            <md-icon :md-src="deleteIcon" class="delete-icon"></md-icon>
+                        </span>
                     </md-button>
                 </md-list-item>
             </md-list>
@@ -43,7 +45,8 @@ export default {
     },
     data: function () {
         return {
-            httpHeaders: []
+            httpHeaders: [],
+            deleteIcon: STATIC_ICONS_BASE + 'cancel-circle.svg'
         }
     },
     mounted: function () {
@@ -57,3 +60,12 @@ export default {
     }
 }
 </script>
+
+
+<style lang="scss" scoped>
+
+.delete-icon {
+    pointer-events: none;
+}
+
+</style>

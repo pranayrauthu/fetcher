@@ -19,7 +19,6 @@ beforeEach(async () => {
 
 test('PowerShellCodeTab should render on load', async () => {
 
-    await page.waitForSelector('.powershell-tab .CodeMirror-line');
     const codeSnippet = await commonInputs.getCodeSnippet(page, 'powershell');
     expect(codeSnippet).toBe(`Invoke-WebRequest -Uri '' -Method 'GET'`);
     
