@@ -1,6 +1,6 @@
 {
   "name": "fetcher",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "http request code generator.",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,7 @@
   "author": "Pranay Rauthu <pranay.rauthu@gmail.com> (https://twitter.com/pranay_rauthu)",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^4.17.11",
     "vue": "^2.5.16",
     "vue-codemirror-lite": "^1.0.4",
     "vue-material": "^1.0.0-beta-10.2",

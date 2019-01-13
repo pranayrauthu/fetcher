@@ -2,9 +2,16 @@
     <div class="curl-tab">
         <div class="md-title">cURL</div>
         <md-checkbox v-model="isInsecure">insecure</md-checkbox>
+        <md-checkbox 
+            v-model="copyToClip"
+            title="copy response to clipboard (might not work in few browsers)"
+        >copy to clip</md-checkbox>
         <md-content class="md-elevation-1">
             <codemirror :value="computedCurlCode" :options="editorOptions"></codemirror>
-            <md-button class="md-primary" @click="$emit('copy-output-code', computedCurlCode)">copy</md-button>
+            <md-button
+                class="md-primary"
+                @click="$emit('copy-output-code', computedCurlCode)"
+            >copy</md-button>
         </md-content>
     </div>
 </template>
@@ -12,6 +19,7 @@
 <script>
 
 require('codemirror/mode/shell/shell');
+import get from 'lodash/get';
 
 export default {
     name: 'CurlCodeTab',
@@ -26,6 +34,7 @@ export default {
     data: function () {
         return {
             isInsecure: false,
+            copyToClip: false,
             editorOptions: {
                 mode: 'text/x-sh',
                 tabSize: 2,
@@ -52,8 +61,18 @@ export default {
         computedInsecureStr: function () {
             return (this.isInsecure) ? (' --insecure ') : (' ');
         },
+        computedCopyToClipStr: function () {
+            const platform = (get(window, 'navigator.platform') || '').toLowerCase();
+            let copyToClip = ' | clip';
+            if(platform.includes('mac')){
+                copyToClip = ' | pbclip';
+            }
+            return (this.copyToClip) ? (copyToClip) : ('');
+        },
         computedCurlCode: function () {
-            return `curl${this.computedInsecureStr}-X${this.inputData.method}${this.computedHeadersStr}${this.computedRequestBodyStr}'${this.inputData.fetchUrl}'`;
+            return `curl${this.computedInsecureStr}-X${this.inputData.method}`+
+            `${this.computedHeadersStr}${this.computedRequestBodyStr}'`+
+            `${this.inputData.fetchUrl}'${ this.computedCopyToClipStr }`;
         }
     }
 };
