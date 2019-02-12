@@ -71,8 +71,8 @@ export default {
         },
         computedCurlCode: function () {
             return `curl${this.computedInsecureStr}-X${this.inputData.method}`+
-            `${this.computedHeadersStr}${this.computedRequestBodyStr}'`+
-            `${this.inputData.fetchUrl}'${ this.computedCopyToClipStr }`;
+            `${this.computedHeadersStr}${this.computedRequestBodyStr}"`+
+            `${this.inputData.fetchUrl}"${ this.computedCopyToClipStr }`;
         }
     }
 };
