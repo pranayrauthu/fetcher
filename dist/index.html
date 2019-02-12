@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fetcher</title>
+    <meta name="theme-color" content="#448aff">
+    <meta name="description" content="Generate HTTP request code in various languages. supports cURL, JavaScript, C#">
+    <link rel="canonical" href="https://pranayrauthu.github.io/fetcher/" />
+    <script type="application/ld+json">
+        {
+          "@context": "http://schema.org/",
+          "@type": "WebSite",
+          "name": "fetcher",
+          "alternateName": "http code geenarator",
+          "url": "https://pranayrauthu.github.io/fetcher/"
+        }
+    </script>
+    <script>
+
+        (function (window, document) {
+            var host = window.location.host;
+            if (host.split(':')[0] != 'localhost') {
+                var googleAnalyticsScriptTag = document.createElement('script');
+                googleAnalyticsScriptTag.setAttribute('async', 'true');
+                googleAnalyticsScriptTag.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=UA-120605918-1');
+                document.head.appendChild(googleAnalyticsScriptTag);
+                (function () {
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag() { dataLayer.push(arguments); }
+                    gtag('js', new Date());
+
+                    gtag('config', 'UA-120605918-1');
+                })();
+            }
+        })(window, document);
+
+    </script>
+
+</head>
+
+<body>
+    <div id="fetcher-app">
+    </div>
+    <script type="application/javascript" src="vendors~main.bundle.js" defer></script>
+    <script type="application/javascript" src="main.bundle.js" defer></script>
+</body>
+
+</html>
