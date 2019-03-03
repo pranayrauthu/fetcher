@@ -3,6 +3,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = (env, argv) => {
@@ -22,11 +23,20 @@ module.exports = (env, argv) => {
         IS_PROD = true;
     }
 
+    // environment variables
     plugins.push(new webpack.DefinePlugin({
         STATIC_JSON_DATA_URL: JSON.stringify(STATIC_JSON_DATA_URL),
         STATIC_ICONS_BASE: JSON.stringify(STATIC_ICONS_BASE),
         IS_PROD: JSON.stringify(IS_PROD)
     }));
+
+    // copy static files to dist folder
+    plugins.push(
+        new CopyPlugin([{
+            from: './src/static',
+            to: path.resolve(__dirname, 'dist')
+        }])
+    )
 
 
     const config = {

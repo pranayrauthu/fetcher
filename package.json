@@ -29,6 +29,7 @@
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-preset-env": "^1.6.1",
     "compression-webpack-plugin": "^1.1.11",
+    "copy-webpack-plugin": "^5.0.0",
     "css-loader": "^0.28.11",
     "jest": "^22.4.3",
     "jest-fetch-mock": "^1.5.0",
