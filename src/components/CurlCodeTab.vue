@@ -49,14 +49,15 @@ export default {
             const headers = Object.keys(this.inputData.requestHeaders);
             if (headers.length > 0) {
                 return headers.reduce((accumulator, currentValue) => (
-                    accumulator + `-H '${currentValue}: ${this.inputData.requestHeaders[currentValue]}' `
+                    accumulator + `-H "${currentValue}: ${this.inputData.requestHeaders[currentValue]}" `
                 ), ' ');
             }
             return ' ';
         },
         computedRequestBodyStr: function () {
-            const { requestBody } = this.inputData;
-            return (requestBody) ? (`-d '${requestBody}' `) : ('');
+            let { requestBody = '' } = this.inputData;
+            requestBody = requestBody.replace(/"/g,`\\"`);
+            return (requestBody) ? (`-d "${requestBody}" `) : ('');
         },
         computedInsecureStr: function () {
             return (this.isInsecure) ? (' --insecure ') : (' ');
