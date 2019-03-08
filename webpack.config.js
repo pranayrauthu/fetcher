@@ -10,7 +10,7 @@ module.exports = (env, argv) => {
     const plugins = [new VueLoaderPlugin()];
     let NODE_ENV = argv.mode;
     NODE_ENV = NODE_ENV.trim();
-    let STATIC_JSON_DATA_URL = '/data/httpHeaders.json';
+    let STATIC_JSON_DATA_URL = '/data/http-headers.json';
     let STATIC_ICONS_BASE = '/assets/'
     let IS_PROD = false;
 
@@ -18,7 +18,7 @@ module.exports = (env, argv) => {
         plugins.push(new BundleAnalyzerPlugin());
         plugins.push(new UglifyJsPlugin());
         plugins.push(new CompressionPlugin);
-        STATIC_JSON_DATA_URL = '/fetcher/data/httpHeaders.json';
+        STATIC_JSON_DATA_URL = '/fetcher/data/http-headers.json';
         STATIC_ICONS_BASE = '/fetcher/assets/'
         IS_PROD = true;
     }
