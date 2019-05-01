@@ -8,11 +8,17 @@ const CsharpCodeTab = () => import('./../components/CsharpCodeTab.vue');
 const HttpCodeTab = () => import('./../components/HttpCodeTab.vue');
 const PowerShellCodeTab = () => import('./../components/PowerShellCodeTab.vue');
 const JavaCodeTab = () => import('./../components/JavaCodeTab.vue');
+const ResponseTab = () => import('./../components/ResponseTab.vue');
 
 Vue.use(Router);
 
 export default new Router({
   routes: [
+    {
+      path: '/response',
+      name: 'response',
+      component: ResponseTab
+    },
     {
       path: '/',
       alias: '/fetch',

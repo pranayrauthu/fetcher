@@ -25,6 +25,8 @@
       </md-content>
       <md-content class="output-tab md-elevation-2">
         <md-tabs :md-active-tab="'tab-'+$route.path.slice(1)">
+          <md-tab id="tab-response" md-label="Response" to="/response">
+          </md-tab>
           <md-tab id="tab-fetch" md-label="JavaScript" to="/fetch">
           </md-tab>
           <md-tab id="tab-curl" md-label="cURL" to="/curl">
