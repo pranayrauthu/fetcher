@@ -1,6 +1,6 @@
 <template>
     <div class="response-tab">
-        <div class="md-title">Response</div>
+        <div class="md-title">Response (beta)</div>
         <div>
             <md-button @click="fetchResponse" class="md-raised md-primary add-header-btn">SEND</md-button>
         </div>
@@ -40,6 +40,28 @@ export default {
         };
     },
     methods: {
+        processResponseHeaders(headers){
+            const processHeaders = Object.entries(
+                headers
+            ).map(([key, value]) => `${key}: ${value}`)
+            .join('\n');
+            return processHeaders;
+        },
+        processReponseBody(body){
+            if(typeof body === "object"){
+                return JSON.stringify(body, null, 2);
+            }
+            return body;
+        },
+        processResponse(resp){
+            const processedResponse = [
+                `${resp.status}`,
+                this.processResponseHeaders(resp.headers),
+                ``,
+                this.processReponseBody(resp.data)
+            ].join('\n');
+            return processedResponse;
+        },
         fetchResponse(){
             this.response = 'Loading...';
             fetch('https://fetcher-api.azurewebsites.net/api/process',{
@@ -54,7 +76,7 @@ export default {
             })
             .then(resp => resp.json())
             .then(resp => {
-                this.response = JSON.stringify(resp);
+                this.response = this.processResponse(resp);
             })
             .catch(err => {
                 this.response = err;
