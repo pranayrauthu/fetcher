@@ -2,7 +2,11 @@
     <div class="response-tab">
         <div class="md-title">Response (beta)</div>
         <div>
-            <md-button @click="fetchResponse" class="md-raised md-primary add-header-btn">SEND</md-button>
+            <md-button
+                @click="fetchResponse"
+                class="md-raised md-primary add-header-btn"
+                :disabled="!inputData.fetchUrl"
+            >SEND</md-button>
         </div>
         <md-content class="md-elevation-1">
             <codemirror :value="response" :options="editorOptions"></codemirror>
@@ -71,7 +75,8 @@ export default {
                 },
                 body: JSON.stringify({
                     method: this.inputData.method,
-                    url: this.inputData.fetchUrl
+                    url: this.inputData.fetchUrl,
+                    headers: this.inputData.requestHeaders
                 })
             })
             .then(resp => resp.json())
@@ -79,7 +84,7 @@ export default {
                 this.response = this.processResponse(resp);
             })
             .catch(err => {
-                this.response = err;
+                this.response = err.message;
             });
         }
     }
