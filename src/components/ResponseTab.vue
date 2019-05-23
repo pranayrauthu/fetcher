@@ -9,8 +9,14 @@
             >SEND</md-button>
         </div>
         <md-content class="md-elevation-1">
-            <codemirror :value="response" :options="editorOptions"></codemirror>
-            <md-button class="md-primary" @click="$emit('copy-output-code', response)">copy</md-button>
+            <codemirror
+                :value="response"
+                :options="editorOptions"
+            ></codemirror>
+            <md-button
+                class="md-primary"
+                @click="$emit('copy-output-code', response)"
+            >copy</md-button>
         </md-content>
     </div>
 </template>
@@ -19,7 +25,6 @@
 
 require('codemirror/mode/http/http');
 import get from 'lodash/get';
-import { setTimeout } from 'timers';
 
 export default {
     name: 'ResponseTab',

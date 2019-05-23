@@ -1,11 +1,20 @@
 <template>
     <div class="curl-tab">
         <div class="md-title">cURL</div>
-        <md-checkbox v-model="isInsecure">insecure</md-checkbox>
+        <md-checkbox
+            v-model="isInsecure"
+            class="insecure-toggle"
+            title="Allow insecure server connections when using SSL"
+        >insecure</md-checkbox>
         <md-checkbox 
             v-model="copyToClip"
-            title="copy response to clipboard (might not work in few browsers)"
+            class="copy-to-clip-toggle"
+            title="copy response to clipboard (might not work in few systems)"
         >copy to clip</md-checkbox>
+        <md-checkbox
+            v-model="dumpHeaders"
+            class="dump-headers-toggle"
+        >dump-headers</md-checkbox>
         <md-content class="md-elevation-1">
             <codemirror :value="computedCurlCode" :options="editorOptions"></codemirror>
             <md-button
@@ -35,6 +44,7 @@ export default {
         return {
             isInsecure: false,
             copyToClip: false,
+            dumpHeaders: false,
             editorOptions: {
                 mode: 'text/x-sh',
                 tabSize: 2,
@@ -60,7 +70,10 @@ export default {
             return (requestBody) ? (`-d "${requestBody}" `) : ('');
         },
         computedInsecureStr: function () {
-            return (this.isInsecure) ? (' --insecure ') : (' ');
+            return (this.isInsecure) ? ('--insecure ') : ('');
+        },
+        computedDumpHeaderStr: function () {
+            return (this.dumpHeaders) ? ('--dump-header - ') : ('');
         },
         computedCopyToClipStr: function () {
             const platform = (get(window, 'navigator.platform') || '').toLowerCase();
@@ -71,7 +84,7 @@ export default {
             return (this.copyToClip) ? (copyToClip) : ('');
         },
         computedCurlCode: function () {
-            return `curl${this.computedInsecureStr}-X${this.inputData.method}`+
+            return `curl ${this.computedInsecureStr}${this.computedDumpHeaderStr}-X${this.inputData.method}`+
             `${this.computedHeadersStr}${this.computedRequestBodyStr}"`+
             `${this.inputData.fetchUrl}"${ this.computedCopyToClipStr }`;
         }

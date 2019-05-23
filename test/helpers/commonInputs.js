@@ -55,6 +55,5 @@ export async function enterSamplePOSTRequestInput(page) {
     await page.keyboard.press('Tab');
     await page.waitFor(3000);
     await page.click('.input-tab .add-header-btn');
-    debugger;
     return page.waitFor(3000);
 }
