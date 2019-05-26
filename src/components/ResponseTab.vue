@@ -4,7 +4,7 @@
         <div>
             <md-button
                 @click="fetchResponse"
-                class="md-raised md-primary add-header-btn"
+                class="md-raised md-primary send-req-btn"
                 :disabled="!inputData.fetchUrl"
             >SEND</md-button>
         </div>

@@ -29,7 +29,23 @@ test('ResponseCodeTab should render GET request code', async () => {
     await commonInputs.enterSampleGETRequestInput(page);
     let codeSnippet = await commonInputs.getCodeSnippet(page, 'response');
     expect(codeSnippet).toBe(`click on send to see the response.`);
-    // TODO: Need to send the request
+    await page.click(`.response-tab .send-req-btn`);
+    await page.waitForFunction(
+        `(function(){
+            const codeMirrorLines = document.querySelectorAll('.response-tab .CodeMirror-line');
+            return [...codeMirrorLines].map(el => el.innerText).join('');
+        })() != 'click on send to see the response.'`
+    );
+    const loadingCodeSnippet = await commonInputs.getCodeSnippet(page, 'response');
+    expect( loadingCodeSnippet ).toContain('Loading...');
+    await page.waitForFunction(
+        `(function(){
+            const codeMirrorLines = document.querySelectorAll('.response-tab .CodeMirror-line');
+            return [...codeMirrorLines].map(el => el.innerText).join('');
+        })() != 'Loading...'`
+    );
+    const responseCodeSnippet = await commonInputs.getCodeSnippet(page, 'response');
+    expect( responseCodeSnippet ).toContain('200');
     
 }, 30000);
 
@@ -38,7 +54,23 @@ test('ResponseCodeTab should render POST request code', async () => {
     await commonInputs.enterSamplePOSTRequestInput(page);
     let codeSnippet = await commonInputs.getCodeSnippet(page, 'response');
     expect(codeSnippet).toBe(`click on send to see the response.`);
-    // TODO: Need to send the request
+    await page.click(`.response-tab .send-req-btn`);
+    await page.waitForFunction(
+        `(function(){
+            const codeMirrorLines = document.querySelectorAll('.response-tab .CodeMirror-line');
+            return [...codeMirrorLines].map(el => el.innerText).join('');
+        })() != 'click on send to see the response.'`
+    );
+    const loadingCodeSnippet = await commonInputs.getCodeSnippet(page, 'response');
+    expect( loadingCodeSnippet ).toContain('Loading...');
+    await page.waitForFunction(
+        `(function(){
+            const codeMirrorLines = document.querySelectorAll('.response-tab .CodeMirror-line');
+            return [...codeMirrorLines].map(el => el.innerText).join('');
+        })() != 'Loading...'`
+    );
+    const responseCodeSnippet = await commonInputs.getCodeSnippet(page, 'response');
+    expect( responseCodeSnippet ).toContain('201');
 
 }, 30000);
 
