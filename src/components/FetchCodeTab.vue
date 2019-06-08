@@ -22,17 +22,10 @@
 <script>
 
 require('codemirror/mode/javascript/javascript');
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'FetchCodeTab',
-    props: {
-        inputData: {
-            type: Object,
-            default: function () {
-                return {};
-            }
-        }
-    },
     data: function () {
         return {
             processJSON: false,
@@ -51,6 +44,7 @@ export default {
         };
     },
     computed: {
+        ...mapGetters(['inputData']),
         processJSONStr: function () {
             if (this.processJSON) {
                 return `.then(function(resp){\n\treturn resp.json();\n})`;

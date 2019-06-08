@@ -1,16 +1,20 @@
 <template>
     <div>
         <div>
-            <md-autocomplete v-model="formData.headerKey" :md-options="Object.keys(httpHeaders)" md-dense class="header-key-input">
+            <md-autocomplete v-model="headerKey" :md-options="Object.keys(httpHeaders)" md-dense class="header-key-input">
                 <label>header key</label>
             </md-autocomplete>
-            <md-autocomplete v-model="formData.headerValue" :md-options="httpHeaders[formData.headerKey] || []" md-dense class="header-value-input">
+            <md-autocomplete v-model="headerValue" :md-options="httpHeaders[headerKey] || []" md-dense class="header-value-input">
                 <label>header value</label>
             </md-autocomplete>
-            <md-button @click="$emit('add-header', formData)" class="md-raised md-primary add-header-btn">ADD</md-button>
+            <md-button
+                :disabled="headerKey===''"
+                @click="addHeader"
+                class="md-raised md-primary add-header-btn"
+            >ADD</md-button>
         </div>
         <div>
-            <md-list @click="$emit('delete-header', $event.target.dataset.header)">
+            <md-list @click="deleteHeader($event.target.dataset.header)">
                 <md-list-item v-for="(value, key) in requestHeaders" :key="key">
                     '{{key}}': '{{value}}'
                     <md-button class="md-icon-button">
@@ -25,26 +29,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
-    props: {
-        formData: {
-            type: Object,
-            default: function () {
-                return {
-                    headerKey: '',
-                    headerValue: ''
-                };
-            }
-        },
-        requestHeaders: {
-            type: Object,
-            default: function () {
-                return {};
-            }
-        }
+    computed:{
+        ...mapGetters(['requestHeaders'])
     },
     data: function () {
         return {
+            headerKey: '',
+            headerValue: '',
             httpHeaders: [],
             deleteIcon: STATIC_ICONS_BASE + 'cancel-circle.svg'
         }
@@ -57,6 +51,23 @@ export default {
             }).catch(err => {
                 // console.log(err);
             });
+    },
+    methods: {
+        addHeader(){
+            const {headerKey, headerValue} = this;
+            this.$store.commit('addRequestHeader', {
+                headerKey,
+                headerValue
+            });
+            this.resetHeaderForm();
+        },
+        resetHeaderForm(){
+            this.headerKey = '';
+            this.headerValue = '';
+        },
+        deleteHeader(headerKey){
+            this.$store.commit('deleteHeader', headerKey)
+        }
     }
 }
 </script>

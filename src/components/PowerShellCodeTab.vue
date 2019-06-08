@@ -11,17 +11,10 @@
 <script>
 
 require('codemirror/mode/powershell/powershell');
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'PowerShellCodeTab',
-    props: {
-        inputData: {
-            type: Object,
-            default: function () {
-                return {};
-            }
-        }
-    },
     data: function () {
         return {
             editorOptions: {
@@ -34,6 +27,7 @@ export default {
         };
     },
     computed: {
+        ...mapGetters(['inputData']),
         computedBodyStr: function () {
             const { requestBody } = this.inputData;
             return (requestBody) ? (` -Body '${requestBody}' `) : ('');

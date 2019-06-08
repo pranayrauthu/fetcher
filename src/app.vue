@@ -19,9 +19,8 @@
 
     <md-content class="app-container">
       <md-content class="input-tab md-elevation-2">
-        <RequestInfoForm :formData="inputData"></RequestInfoForm>
-        <HeaderForm :formData="addHeaderForm" @add-header="addRequestHeader" :requestHeaders="inputData.requestHeaders" @delete-header="deleteHeader">
-        </HeaderForm>
+        <RequestInfoForm />
+        <HeaderForm />
       </md-content>
       <md-content class="output-tab md-elevation-2">
         <md-tabs :md-active-tab="'tab-'+$route.path.slice(1)">
@@ -41,7 +40,7 @@
           </md-tab>
         </md-tabs>
         <hr>
-        <router-view :inputData="inputData" @copy-output-code="copyOutputCode" class="current-code-component"></router-view>
+        <router-view @copy-output-code="copyOutputCode" class="current-code-component"></router-view>
       </md-content>
     </md-content>
 
@@ -64,51 +63,10 @@ export default {
       appLogo: STATIC_ICONS_BASE + 'app-logo.svg',
       shareIcon: STATIC_ICONS_BASE + 'share2.svg',
       githubLogo: STATIC_ICONS_BASE + 'github.svg',
-      inputData: {
-        method: "GET",
-        fetchUrl: "",
-        requestBody: "",
-        requestHeaders: {}
-      },
-      addHeaderForm: {
-        headerKey: "",
-        headerValue: ""
-      },
       showSnackbar: false,
-      yourCode: "// enter your code"
     };
   },
   methods: {
-    addRequestHeader: function ({ headerKey, headerValue }) {
-      if (
-        !headerKey ||
-        !headerValue ||
-        (headerKey === "" || headerValue === "") ||
-        this.inputData.requestHeaders[headerKey]
-      ) {
-        return;
-      }
-      this.inputData.requestHeaders = Object.assign(
-        {},
-        this.inputData.requestHeaders,
-        { [headerKey]: headerValue }
-      );
-      this.addHeaderForm.headerKey = "";
-      this.addHeaderForm.headerValue = "";
-    },
-    deleteHeader: function (header) {
-      if (!header) {
-        return;
-      }
-      if (this.inputData.requestHeaders[header]) {
-        let newHeaders = Object.assign(
-          {},
-          this.inputData.requestHeaders
-        );
-        delete newHeaders[header];
-        this.inputData.requestHeaders = newHeaders;
-      }
-    },
     copyOutputCode: function (copyText) {
       if (navigator.clipboard) {
         navigator.clipboard.writeText(copyText)

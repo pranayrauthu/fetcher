@@ -12,17 +12,10 @@
 <script>
 
 require('codemirror/mode/http/http');
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'HttpCodeTab',
-    props: {
-        inputData: {
-            type: Object,
-            default: function () {
-                return {};
-            }
-        }
-    },
     data: function () {
         return {
             editorOptions: {
@@ -35,6 +28,7 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(['inputData']),
         outputCodeStr: function () {
             return `${this.inputData.method} ${this.inputData.fetchUrl} HTTP/1.1\n${this.computedHeadersStr}\n\n${this.inputData.requestBody}`;
         },

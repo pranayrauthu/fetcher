@@ -25,17 +25,10 @@
 
 require('codemirror/mode/http/http');
 import get from 'lodash/get';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'ResponseTab',
-    props: {
-        inputData: {
-            type: Object,
-            default: function () {
-                return {};
-            }
-        }
-    },
     data: function () {
         return {
             editorOptions: {
@@ -47,6 +40,9 @@ export default {
             },
             response: 'click on send to see the response.'
         };
+    },
+    computed: {
+        ...mapGetters(['inputData'])
     },
     methods: {
         processResponseHeaders(headers){

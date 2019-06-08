@@ -1,4 +1,5 @@
 import Vue from 'vue';
+
 import {
 	MdButton,
 	MdContent,
@@ -33,12 +34,14 @@ require('codemirror/addon/display/autorefresh');
 ].forEach(c => Vue.use(c));
 
 import router from './router';
+import store from './store';
 import app from './app.vue';
 
 
 const APP = new Vue({
 	el: '#fetcher-app',
 	router,
+	store,
 	render: h => h(app)
 });
 

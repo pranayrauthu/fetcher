@@ -30,8 +30,10 @@ export async function getCodeSnippet(page, tab) {
 export async function enterSampleGETRequestInput(page) {
     await page.type('.input-tab .fetch-url-input input', 'https://jsonplaceholder.typicode.com/posts/1', {delay: 20});
     await page.type('.input-tab .header-key-input input', 'Accept', {delay: 20});
+    await page.click('.input-tab .header-key-input label');
+    await page.waitFor(3000);
     await page.type('.input-tab .header-value-input input', 'application/json', {delay: 20});
-    await page.keyboard.press('Tab');
+    await page.click('.input-tab .header-key-input label');
     await page.waitFor(3000);
     await page.click('.input-tab .add-header-btn');
     return page.waitFor(3000);
@@ -51,9 +53,12 @@ export async function enterSamplePOSTRequestInput(page) {
     );
     await page.type('.input-tab textarea.request-body', `{"title":"foo","body":"bar","userId":1}`, {delay: 20});
     await page.type('.input-tab .header-key-input input', 'Accept', {delay: 20});
+    await page.click('.input-tab .header-key-input label');
+    await page.waitFor(3000);
     await page.type('.input-tab .header-value-input input', 'application/json', {delay: 20});
-    await page.keyboard.press('Tab');
+    await page.click('.input-tab .header-key-input label');
     await page.waitFor(3000);
     await page.click('.input-tab .add-header-btn');
+    debugger;
     return page.waitFor(3000);
 }

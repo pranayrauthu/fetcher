@@ -29,17 +29,10 @@
 
 require('codemirror/mode/shell/shell');
 import get from 'lodash/get';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'CurlCodeTab',
-    props: {
-        inputData: {
-            type: Object,
-            default: function () {
-                return {};
-            }
-        }
-    },
     data: function () {
         return {
             isInsecure: false,
@@ -55,6 +48,7 @@ export default {
         };
     },
     computed: {
+        ...mapGetters(['inputData']),
         computedHeadersStr: function () {
             const headers = Object.keys(this.inputData.requestHeaders);
             if (headers.length > 0) {

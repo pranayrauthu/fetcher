@@ -11,17 +11,10 @@
 <script>
 
 require('codemirror/mode/clike/clike');
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'CsharpCodeTab',
-    props: {
-        inputData: {
-            type: Object,
-            default: function () {
-                return {};
-            }
-        }
-    },
     data: function () {
         return {
             editorOptions: {
@@ -34,6 +27,7 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(['inputData']),
         computedHttpBodyStr: function () {
             const { method, requestBody } = this.inputData;
             if(method === 'GET'){
