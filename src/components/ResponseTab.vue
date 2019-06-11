@@ -25,7 +25,7 @@
 
 require('codemirror/mode/http/http');
 import get from 'lodash/get';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     name: 'ResponseTab',
@@ -38,56 +38,13 @@ export default {
                 lineNumbers: true,
                 autoRefresh: true
             },
-            response: 'click on send to see the response.'
         };
     },
     computed: {
-        ...mapGetters(['inputData'])
+        ...mapGetters(['inputData','response'])
     },
     methods: {
-        processResponseHeaders(headers){
-            const processHeaders = Object.entries(
-                headers
-            ).map(([key, value]) => `${key}: ${value}`)
-            .join('\n');
-            return processHeaders;
-        },
-        processReponseBody(body){
-            if(typeof body === "object"){
-                return JSON.stringify(body, null, 2);
-            }
-            return body;
-        },
-        processResponse(resp){
-            const processedResponse = [
-                `${resp.status}`,
-                this.processResponseHeaders(resp.headers),
-                ``,
-                this.processReponseBody(resp.data)
-            ].join('\n');
-            return processedResponse;
-        },
-        fetchResponse(){
-            this.response = 'Loading...';
-            fetch('https://fetcher-api.azurewebsites.net/api/process',{
-                method: 'post',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    method: this.inputData.method,
-                    url: this.inputData.fetchUrl,
-                    headers: this.inputData.requestHeaders
-                })
-            })
-            .then(resp => resp.json())
-            .then(resp => {
-                this.response = this.processResponse(resp);
-            })
-            .catch(err => {
-                this.response = err.message;
-            });
-        }
+        ...mapActions(['fetchResponse'])
     }
 };
 </script>
