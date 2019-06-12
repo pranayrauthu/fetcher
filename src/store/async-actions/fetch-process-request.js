@@ -23,7 +23,7 @@ function processResponse(resp) {
     return processedResponse;
 }
 
-export function fetchResponse({ getters, dispatch }, inputData) {
+export function fetchResponse({ getters, dispatch }) {
     const {
         method,
         fetchUrl: url,
