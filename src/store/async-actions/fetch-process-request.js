@@ -1,3 +1,5 @@
+import { API_BASE } from './../../constants/api-constant';
+
 function processResponseHeaders(headers) {
     const processHeaders = Object.entries(
         headers
@@ -27,10 +29,11 @@ export function fetchResponse({ getters, dispatch }) {
     const {
         method,
         fetchUrl: url,
-        requestHeaders: headers
+        requestHeaders: headers,
+        requestBody: data
     } = getters.inputData;
     dispatch('setResponse', 'Loading...');
-    fetch('https://fetcher-api.azurewebsites.net/api/process', {
+    fetch(`${API_BASE}/process`, {
         method: 'post',
         headers: {
             "Content-Type": "application/json"
@@ -38,6 +41,7 @@ export function fetchResponse({ getters, dispatch }) {
         body: JSON.stringify({
             method,
             url,
+            data,
             headers
         })
     })

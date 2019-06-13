@@ -1,0 +1,1 @@
+export const API_BASE = 'https://fetcher-api.azurewebsites.net/api';
