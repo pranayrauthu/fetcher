@@ -15,38 +15,38 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: '/response/:id',
+      path: '/response/:id?',
       name: 'response',
       component: ResponseTab
     },
     {
-      path: '/:id',
-      alias: '/fetch/:id',
+      path: '/',
+      alias: '/fetch/:id?',
       name: 'fetch',
       component: FetchCodeTab
     },
     {
-      path: '/curl/:id',
+      path: '/curl/:id?',
       name: 'curl',
       component: CurlCodeTab
     },
     {
-      path: '/csharp',
+      path: '/csharp/:id?',
       name: 'csharp',
       component: CsharpCodeTab
     },
     {
-      path: '/http/:id',
+      path: '/http/:id?',
       name: 'http',
       component: HttpCodeTab
     },
     {
-      path: '/powershell/:id',
+      path: '/powershell/:id?',
       name: 'powershell',
       component: PowerShellCodeTab
     },
     {
-      path: '/java/:id',
+      path: '/java/:id?',
       name: 'java',
       component: JavaCodeTab
     },

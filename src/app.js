@@ -11,7 +11,8 @@ import {
 	MdCheckbox,
 	MdAutocomplete,
 	MdMenu,
-	MdList
+	MdList,
+	MdDrawer
 } from 'vue-material/dist/components';
 import VueCodeMirror from 'vue-codemirror-lite';
 import 'vue-material/dist/vue-material.min.css';
@@ -31,6 +32,7 @@ require('codemirror/addon/display/autorefresh');
 	MdAutocomplete,
 	MdMenu,
 	MdList,
+	MdDrawer
 ].forEach(c => Vue.use(c));
 
 import router from './router';

@@ -5,10 +5,12 @@ export function saveRequest({getters, dispatch}){
     const {
         method,
         fetchUrl: url,
-        requestHeaders: headers,
-        requestBody: body
+        requestHeaders,
+        requestBody: data
     } = getters.inputData;
-    // TODO: transform headers
+    const headers = Object.keys(requestHeaders).map(
+        h => ({key: h, value: requestHeaders[h]})
+    );
     fetch(`${API_BASE}/saverequest`, {
         method: 'post',
         headers: {

@@ -1,21 +1,7 @@
 <template>
   <md-content>
 
-    <md-toolbar class="md-primary app-header">
-      <span class="app-logo">
-        <md-icon :md-src="appLogo" />
-      </span>
-      <a href="https://github.com/pranayrauthu/fetcher" target="_blank" class="github-link">
-        <md-button class="md-icon-button">
-          <md-icon :md-src="githubLogo"></md-icon>
-        </md-button>
-      </a>
-      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fpranayrauthu%2Ffetcher&via=pranay_rauthu&text=generate%20HTTP%20request%20code%20with&hashtags=fetcher" target="_blank">
-        <md-button class="md-icon-button">
-          <md-icon :md-src="shareIcon"></md-icon>
-        </md-button>
-      </a>
-    </md-toolbar>
+    <app-header/>
 
     <md-content class="app-container">
       <md-content class="input-tab md-elevation-2">
@@ -55,14 +41,11 @@
 <script>
 import RequestInfoForm from "./components/RequestInfoForm.vue";
 import HeaderForm from "./components/HeaderForm.vue";
+import AppHeader from "./components/AppHeader.vue";
 
 export default {
   data: function () {
     return {
-      appName: "Fetcher",
-      appLogo: STATIC_ICONS_BASE + 'app-logo.svg',
-      shareIcon: STATIC_ICONS_BASE + 'share2.svg',
-      githubLogo: STATIC_ICONS_BASE + 'github.svg',
       showSnackbar: false,
     };
   },
@@ -83,6 +66,7 @@ export default {
   components: {
     RequestInfoForm,
     HeaderForm,
+    AppHeader
   }
 };
 </script>
@@ -109,13 +93,12 @@ body {
 
 <style lang="scss" scoped>
 .app-header {
-  position: fixed;
   top: 0;
   z-index: 6;
 
   .app-logo {
     margin: auto;
-    margin-left: 5px;
+    margin-left: 0px;
 
     .md-icon {
       width: 100px;
@@ -130,7 +113,6 @@ body {
   grid-column-gap: 10px;
   grid-row-gap: 10px;
   margin: 10px;
-  margin-top: 80px;
 
   .input-tab,
   .output-tab {
@@ -144,9 +126,6 @@ body {
     }
   }
 
-  .github-link {
-    color: white;
-  }
 }
 
 @media only screen and (max-width: 800px) {
