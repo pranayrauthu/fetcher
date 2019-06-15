@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
 import {httpMethods} from './../enums/http-methods';
 
 export default {
@@ -56,6 +57,12 @@ export default {
     return {
       httpMethods: Object.values(httpMethods)
     };
+  },
+  methods: {
+    ...mapActions(['getSavedRequest'])
+  },
+  mounted(){
+    this.getSavedRequest();
   }
 };
 </script>

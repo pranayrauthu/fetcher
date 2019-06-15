@@ -8,6 +8,7 @@ export function saveRequest({getters, dispatch}){
         requestHeaders: headers,
         requestBody: body
     } = getters.inputData;
+    // TODO: transform headers
     fetch(`${API_BASE}/saverequest`, {
         method: 'post',
         headers: {

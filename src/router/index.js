@@ -15,18 +15,18 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: '/response',
+      path: '/response/:id',
       name: 'response',
       component: ResponseTab
     },
     {
-      path: '/',
-      alias: '/fetch',
+      path: '/:id',
+      alias: '/fetch/:id',
       name: 'fetch',
       component: FetchCodeTab
     },
     {
-      path: '/curl',
+      path: '/curl/:id',
       name: 'curl',
       component: CurlCodeTab
     },
@@ -36,17 +36,17 @@ export default new Router({
       component: CsharpCodeTab
     },
     {
-      path: '/http',
+      path: '/http/:id',
       name: 'http',
       component: HttpCodeTab
     },
     {
-      path: '/powershell',
+      path: '/powershell/:id',
       name: 'powershell',
       component: PowerShellCodeTab
     },
     {
-      path: '/java',
+      path: '/java/:id',
       name: 'java',
       component: JavaCodeTab
     },

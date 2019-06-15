@@ -3,6 +3,12 @@ import Vuex from 'vuex';
 import {
     fetchResponse
 } from './async-actions/fetch-process-request';
+import {
+    getSavedRequest
+} from './async-actions/get-saved-request';
+import {
+    saveRequest
+} from './async-actions/save-request';
 
 Vue.use(Vuex);
 
@@ -25,6 +31,9 @@ export const store = new Vuex.Store({
         response: state => state.response
     },
     mutations: {
+        setInputData(state, inputData){
+            state.inputData = inputData;
+        },
         addRequestHeader(state, {headerKey, headerValue}){
             state.inputData.requestHeaders = {
                 ...state.inputData.requestHeaders,
@@ -52,6 +61,9 @@ export const store = new Vuex.Store({
         }
     },
     actions: {
+        setInputData({commit}, inputData){
+            commit('setInputData', inputData);
+        },
         addRequestHeader({commit}, {headerKey, headerValue}){
             commit('addRequestHeader', {headerKey, headerValue});
         },
@@ -70,7 +82,9 @@ export const store = new Vuex.Store({
         setResponse({commit}, response){
             commit('setResponse', response);
         },
-        fetchResponse
+        fetchResponse,
+        getSavedRequest,
+        saveRequest
     }
 });
 

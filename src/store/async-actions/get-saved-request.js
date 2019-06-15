@@ -1,8 +1,32 @@
+import { API_BASE } from './../../constants/api-constant';
 import router from './../../router';
 
 export function getSavedRequest({getters, dispatch}){
-    // TODO: get request id info from the router
-    // if valid make an api call to get the savedRequest info
-    // update the store with requestInfo
-    throw 'Not implemented';
+    const {id} = router.currentRoute.query;
+    if(!id){
+        return;
+    }
+
+    fetch(`${API_BASE}/getrequest/${id}`)
+    .then(resp => resp.json())
+    .then(resp => {
+        const {
+            method,
+            headers = [],
+            data: requestBody,
+            url: fetchUrl,
+        } = resp;
+        const requestHeaders = headers.reduce(
+            (acc, cur)=>({
+                ...acc,[cur.key]:cur.value
+            }),{});
+        dispatch('setInputData', {
+            method,
+            requestHeaders,
+            requestBody,
+            fetchUrl
+        });
+    }).catch(err => {
+        console.log(err);
+    })
 }
