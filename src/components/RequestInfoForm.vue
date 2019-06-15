@@ -24,6 +24,7 @@
 
 <script>
 import {mapActions} from 'vuex';
+import router from './../router';
 import {httpMethods} from './../enums/http-methods';
 
 export default {
@@ -62,7 +63,7 @@ export default {
     ...mapActions(['getSavedRequest'])
   },
   mounted(){
-    this.getSavedRequest();
+    router.onReady(() => this.getSavedRequest());
   }
 };
 </script>

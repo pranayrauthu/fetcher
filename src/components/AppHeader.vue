@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
+
 export default {
     name: 'AppHeader',
     data(){
@@ -48,9 +50,7 @@ export default {
         }
     },
     methods: {
-        saveRequest(){
-            // TODO: Save request...
-        }
+      ...mapActions(['saveRequest']),
     }
 }
 </script>

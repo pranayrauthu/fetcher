@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-
 const FetchCodeTab = () => import('./../components/FetchCodeTab.vue');
 const CurlCodeTab = () => import('./../components/CurlCodeTab.vue');
 const CsharpCodeTab = () => import('./../components/CsharpCodeTab.vue');
@@ -18,12 +17,6 @@ export default new Router({
       path: '/response/:id?',
       name: 'response',
       component: ResponseTab
-    },
-    {
-      path: '/',
-      alias: '/fetch/:id?',
-      name: 'fetch',
-      component: FetchCodeTab
     },
     {
       path: '/curl/:id?',
@@ -50,5 +43,16 @@ export default new Router({
       name: 'java',
       component: JavaCodeTab
     },
+    {
+      path: '/fetch/:id?',
+      alias: '/:id?',
+      name: 'fetch',
+      component: FetchCodeTab
+    },
+    {
+      path: '/:id?',
+      name: 'home',
+      component: FetchCodeTab
+    }
   ]
 })

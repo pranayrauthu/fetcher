@@ -1,7 +1,7 @@
 import { API_BASE } from './../../constants/api-constant';
 import router from './../../router';
 
-export function getSavedRequest({getters, dispatch}){
+export function getSavedRequest({dispatch}){
     const {id} = router.currentRoute.query;
     if(!id){
         return;
