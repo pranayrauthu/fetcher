@@ -11,6 +11,7 @@ export function saveRequest({getters, dispatch}){
     const headers = Object.keys(requestHeaders).map(
         h => ({key: h, value: requestHeaders[h]})
     );
+    dispatch('showSnackBar', 'Saving...');
     fetch(`${API_BASE}/saverequest`, {
         method: 'post',
         headers: {
@@ -30,6 +31,7 @@ export function saveRequest({getters, dispatch}){
                 id
             }
         });
+        dispatch('showSnackBar', 'permalink created. It expires in 30 min.');
     })
     .catch(err => {
         console.log(err);
