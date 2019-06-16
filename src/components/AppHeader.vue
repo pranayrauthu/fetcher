@@ -27,7 +27,7 @@
         </md-list>
         <md-list>
           <md-list-item>
-            <md-button class="nav-btn" @click="saveRequest">save</md-button>
+            <md-button class="nav-btn" @click="onSaveClick">save</md-button>
           </md-list-item>
         </md-list>
 
@@ -51,6 +51,10 @@ export default {
     },
     methods: {
       ...mapActions(['saveRequest']),
+      onSaveClick(){
+        this.menuVisible = false;
+        this.saveRequest();
+      }
     }
 }
 </script>

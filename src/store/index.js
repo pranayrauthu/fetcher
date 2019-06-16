@@ -20,7 +20,11 @@ export const store = new Vuex.Store({
             requestBody: "",    
             requestHeaders: {}
         },
-        response: 'click on send to see the response.'
+        response: 'click on send to see the response.',
+        snackBar: {
+            visible: false,
+            text: ''
+        }
     },
     getters: {
         inputData: state => state.inputData,
@@ -28,7 +32,9 @@ export const store = new Vuex.Store({
         fetchUrl: state => state.inputData.fetchUrl,
         requestBody: state => state.inputData.requestBody,
         requestHeaders: state => state.inputData.requestHeaders,
-        response: state => state.response
+        response: state => state.response,
+        snackBarState: state => state.snackBar.visible,
+        snackBarText: state => state.snackBar.text
     },
     mutations: {
         setInputData(state, inputData){
@@ -58,6 +64,15 @@ export const store = new Vuex.Store({
         },
         setResponse(state, response){
             state.response = response;
+        },
+        showSnackBar(state, text){
+            state.snackBar = {
+                visible: true,
+                text,
+            }
+        },
+        hideSnackBar(state){
+            state.snackBar.visible = false;
         }
     },
     actions: {
@@ -81,6 +96,12 @@ export const store = new Vuex.Store({
         },
         setResponse({commit}, response){
             commit('setResponse', response);
+        },
+        showSnackBar({commit}, text){
+            commit('showSnackBar', text);
+        },
+        hideSnackBar({commit}){
+            commit('hideSnackBar');
         },
         fetchResponse,
         getSavedRequest,

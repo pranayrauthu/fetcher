@@ -30,33 +30,45 @@
       </md-content>
     </md-content>
 
-    <md-snackbar :md-position="'center'" :md-duration="2000" :md-active.sync="showSnackbar" md-persistent>
-      <span>text copied to clipboard.</span>
-      <md-button class="md-primary" @click="showSnackbar = false">close</md-button>
+    <md-snackbar :md-position="'center'" :md-duration="2000" :md-active.sync="snackBarState" md-persistent>
+      <span>{{snackBarText}}</span>
+      <md-button class="md-primary" @click="hideSnackBar">close</md-button>
     </md-snackbar>
 
   </md-content>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import RequestInfoForm from "./components/RequestInfoForm.vue";
 import HeaderForm from "./components/HeaderForm.vue";
 import AppHeader from "./components/AppHeader.vue";
 
 export default {
-  data: function () {
-    return {
-      showSnackbar: false,
-    };
+  computed: {
+    ...mapGetters([
+      'snackBarText'
+    ]),
+    snackBarState: {
+      get(){
+        return this.$store.getters.snackBarState;
+      },
+      set(value){
+        !value && this.hideSnackBar();
+      }
+    }
   },
   methods: {
+    ...mapActions(['hideSnackBar', 'showSnackBar']),
+    // TODO: This should be an async action
     copyOutputCode: function (copyText) {
       if (navigator.clipboard) {
         navigator.clipboard.writeText(copyText)
           .then(() => {
-            this.showSnackbar = true;
+            this.showSnackBar('text copied successfully 💃💃💃');
           })
           .catch(err => {
+            this.showSnackBar('unable to copy text.. 😢');
             console.error('Could not copy text: ', err);
           });
       }
