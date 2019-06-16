@@ -34,6 +34,7 @@ export function saveRequest({getters, dispatch}){
         dispatch('showSnackBar', 'permalink created. It expires in 30 min.');
     })
     .catch(err => {
+        dispatch('showSnackBar', 'unable to save request. please try again')
         console.log(err);
     });
 }

@@ -2,7 +2,7 @@
     <div>
         <md-toolbar class="md-primary app-header">
       <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
-        <md-icon :md-src="menuIcon"/>
+        <md-icon :md-src="menuIcon" class="app-menu"/>
       </md-button>
       <span class="app-logo">
         <md-icon :md-src="appLogo" />
@@ -27,7 +27,7 @@
         </md-list>
         <md-list>
           <md-list-item>
-            <md-button class="nav-btn" @click="onSaveClick">save</md-button>
+            <md-button class="nav-btn-save" @click="onSaveClick">save</md-button>
           </md-list-item>
         </md-list>
 
@@ -83,7 +83,7 @@ export default {
     width: 230px;
     max-width: calc(100vw - 125px);
 
-    .nav-btn {
+    .nav-btn-save {
         width: 100%;
     }
 }
