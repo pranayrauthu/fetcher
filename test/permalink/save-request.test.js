@@ -26,9 +26,10 @@ test('on saving the request permalink should be created', async () => {
     await page.waitFor(3000);
     const urlAfterSave = await page.url();
     expect(urlAfterSave).toContain('id');
-    // navigate to permalink
-    // test for fetch code snippet
-
+    await page.goto(urlAfterSave);
+    const codeSnippet = await commonInputs.getCodeSnippet(page, 'fetch');
+    expect(codeSnippet).toBe(`fetch('https://jsonplaceholder.typicode.com/posts/1', {  "method": "GET",  "headers": {    "Accept": "application/json"  }}).then(function(resp){  console.log(resp);});`);
+    
 }, 30000);
 
 afterAll(() => {
