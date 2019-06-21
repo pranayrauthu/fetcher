@@ -1,1 +1,1 @@
-export const API_BASE = 'https://fetcher-api.azurewebsites.net/api';
+export const API_BASE = 'https://fetcher-api.pranayrauthu.now.sh/api';
