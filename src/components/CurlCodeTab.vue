@@ -6,6 +6,11 @@
             class="insecure-toggle"
             title="Allow insecure server connections when using SSL"
         >insecure</md-checkbox>
+        <md-checkbox
+            v-model="isVerbose"
+            class="verbose-toggle"
+            title="Output all the details of the request"
+        >verbose</md-checkbox>
         <md-checkbox 
             v-model="copyToClip"
             class="copy-to-clip-toggle"
@@ -36,6 +41,7 @@ export default {
     data: function () {
         return {
             isInsecure: false,
+            isVerbose: false,
             copyToClip: false,
             dumpHeaders: false,
             editorOptions: {
@@ -66,6 +72,9 @@ export default {
         computedInsecureStr: function () {
             return (this.isInsecure) ? ('--insecure ') : ('');
         },
+        computedVerboseStr: function () {
+            return (this.isVerbose) ? ('--verbose ') : ('');
+        },
         computedDumpHeaderStr: function () {
             return (this.dumpHeaders) ? ('--dump-header - ') : ('');
         },
@@ -78,7 +87,7 @@ export default {
             return (this.copyToClip) ? (copyToClip) : ('');
         },
         computedCurlCode: function () {
-            return `curl ${this.computedInsecureStr}${this.computedDumpHeaderStr}-X${this.inputData.method}`+
+            return `curl ${this.computedInsecureStr}${this.computedVerboseStr}${this.computedDumpHeaderStr}-X${this.inputData.method}`+
             `${this.computedHeadersStr}${this.computedRequestBodyStr}"`+
             `${this.inputData.fetchUrl}"${ this.computedCopyToClipStr }`;
         }
