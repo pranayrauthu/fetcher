@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-const FetchCodeTab = () => import('./../components/FetchCodeTab.vue');
+const FetchCodeTab = () => import('./../components/FetchCodeTab/Index.vue');
 const CurlCodeTab = () => import('./../components/CurlCodeTab.vue');
 const CsharpCodeTab = () => import('./../components/CsharpCodeTab.vue');
 const HttpCodeTab = () => import('./../components/HttpCodeTab.vue');

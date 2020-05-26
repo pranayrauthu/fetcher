@@ -24,6 +24,8 @@
 require('codemirror/mode/javascript/javascript');
 import { mapGetters } from 'vuex';
 
+import { fetchCode, asyncAwaitCode } from './output-code';
+
 export default {
     name: 'FetchCodeTab',
     data: function () {
@@ -45,38 +47,16 @@ export default {
     },
     computed: {
         ...mapGetters(['inputData']),
-        processJSONStr: function () {
-            if (this.processJSON) {
-                return `.then(function(resp){\n\treturn resp.json();\n})`;
-            }
-            return "";
-        },
-        optionsJSONStr: function () {
-            let retObj = {
-                method: this.inputData.method,
-                headers: this.inputData.requestHeaders
-            };
-
-            if (retObj.method !== "GET") {
-                retObj.body = this.inputData.requestBody;
-            }
-
-            if (this.enableMode) {
-                retObj.mode = this.selectedMode;
-            }
-            return JSON.stringify(retObj, null, 2);
-        },
         fetchCodeStr: function () {
+            const options = {
+                ...this.inputData,
+                enableMode: this.enableMode,
+                processJSON: this.processJSON
+            };
             if(this.useAsyncAwait){
-                return this.fetchCodeWithAsyncAwaitStr;
+                return asyncAwaitCode(options);
             }
-            return `fetch('${this.inputData.fetchUrl}', ${this.optionsJSONStr})${this.processJSONStr}.then(function(resp){\n\tconsole.log(resp);\n});`;
-        },
-        fetchCodeWithAsyncAwaitStr: function () {
-            if(this.processJSON){
-                return `const resp = await (await fetch('${this.inputData.fetchUrl}', ${this.optionsJSONStr})).json();`;
-            }
-            return `const resp = await fetch('${this.inputData.fetchUrl}', ${this.optionsJSONStr});`;
+            return fetchCode(options);
         }
     }
 };
