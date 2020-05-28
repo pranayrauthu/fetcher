@@ -6,7 +6,7 @@ const CurlCodeTab = () => import('./../components/CurlCodeTab.vue');
 const CsharpCodeTab = () => import('./../components/CsharpCodeTab.vue');
 const HttpCodeTab = () => import('./../components/HttpCodeTab.vue');
 const PowerShellCodeTab = () => import('./../components/PowerShellCodeTab.vue');
-const JavaCodeTab = () => import('./../components/JavaCodeTab.vue');
+const JavaCodeTab = () => import('./../components/JavaCodeTab/Index.vue');
 const ResponseTab = () => import('./../components/ResponseTab.vue');
 
 Vue.use(Router);
