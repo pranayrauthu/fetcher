@@ -18,3 +18,7 @@ generate HTTP request code for various languages. try it for free [here](https:/
 **License**
 
 MIT
+
+**Support**
+
+[Paypal.me](https://paypal.me/prauthu/100)
