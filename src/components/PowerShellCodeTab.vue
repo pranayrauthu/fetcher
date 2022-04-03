@@ -13,7 +13,7 @@
         >expand content</md-checkbox>
         <md-content class="md-elevation-1">
             <codemirror :value="computedPowerShellCode" :options="editorOptions"></codemirror>
-            <md-button class="md-primary" @click="$emit('copy-output-code', computedPowerShellCode)">copy</md-button>
+            <v-btn class="md-primary" @click="$emit('copy-output-code', computedPowerShellCode)">copy</v-btn>
         </md-content>
     </div>
 </template>

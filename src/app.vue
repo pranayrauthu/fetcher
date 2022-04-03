@@ -1,41 +1,81 @@
 <template>
-  <md-content>
+  <v-app>
 
-    <app-header/>
+    <app-header />
+    <v-container fluid>
+      <v-row>
+        <v-col cols="4">
+          <RequestInfoForm />
+          <HeaderForm />
+        </v-col>
+        <v-col cols="8">
+          <v-tabs :class="'tab-'+$route.path.slice(1)">
+            <v-tab
+              id="tab-response"
+              to="/response"
+            >
+              Response
+            </v-tab>
+            <v-tab
+              id="tab-fetch"
+              to="/fetch"
+            >
+              JavaScript
+            </v-tab>
+            <v-tab
+              id="tab-curl"
+              to="/curl"
+            >
+              cURL
+            </v-tab>
+            <v-tab
+              id="tab-csharp"
+              to="/csharp"
+            >
+              C#
+            </v-tab>
+            <v-tab
+              id="tab-http"
+              to="/http"
+            >
+              HTTP
+            </v-tab>
+            <v-tab
+              id="tab-powershell"
+              to="/powershell"
+            >
+              PowerShell
+            </v-tab>
+            <v-tab
+              id="tab-java"
+              to="/java"
+            >
+              Java
+            </v-tab>
+          </v-tabs>
+          <hr>
+          <router-view
+            @copy-output-code="copyOutputCode"
+            class="current-code-component"
+          ></router-view>
+        </v-col>
+      </v-row>
+    </v-container>
 
-    <md-content class="app-container">
-      <md-content class="input-tab md-elevation-2">
-        <RequestInfoForm />
-        <HeaderForm />
-      </md-content>
-      <md-content class="output-tab md-elevation-2">
-        <md-tabs :md-active-tab="'tab-'+$route.path.slice(1)">
-          <md-tab id="tab-response" md-label="Response" to="/response">
-          </md-tab>
-          <md-tab id="tab-fetch" md-label="JavaScript" to="/fetch">
-          </md-tab>
-          <md-tab id="tab-curl" md-label="cURL" to="/curl">
-          </md-tab>
-          <md-tab id="tab-csharp" md-label="C#" to="/csharp">
-          </md-tab>
-          <md-tab id="tab-http" md-label="HTTP" to="/http">
-          </md-tab>
-          <md-tab id="tab-powershell" md-label="PowerShell" to="/powershell">
-          </md-tab>
-          <md-tab id="tab-java" md-label="Java" to="/java">
-          </md-tab>
-        </md-tabs>
-        <hr>
-        <router-view @copy-output-code="copyOutputCode" class="current-code-component"></router-view>
-      </md-content>
-    </md-content>
-
-    <md-snackbar :md-position="'center'" :md-duration="2000" :md-active.sync="snackBarState" md-persistent>
+    <md-snackbar
+      :md-position="'center'"
+      :md-duration="2000"
+      :md-active.sync="snackBarState"
+      md-persistent
+    >
       <span>{{snackBarText}}</span>
-      <md-button class="md-primary" @click="hideSnackBar">close</md-button>
+      <md-button
+        class="md-primary"
+        @click="hideSnackBar"
+      >close</md-button>
     </md-snackbar>
 
-  </md-content>
+  </v-app>
 </template>
 
 <script>
@@ -50,10 +90,10 @@ export default {
       'snackBarText'
     ]),
     snackBarState: {
-      get(){
+      get() {
         return this.$store.getters.snackBarState;
       },
-      set(value){
+      set(value) {
         !value && this.hideSnackBar();
       }
     }
@@ -86,7 +126,13 @@ export default {
 <style lang="scss">
 @import "~vue-material/dist/theme/engine";
 
-@include md-register-theme("default", (primary: #ff4500, accent: #1a11e8));
+@include md-register-theme(
+  "default",
+  (
+    primary: #ff4500,
+    accent: #1a11e8,
+  )
+);
 
 @import "~vue-material/dist/theme/all"; // Apply the theme
 
@@ -100,7 +146,6 @@ body {
     }
   }
 }
-
 </style>
 
 <style lang="scss" scoped>
@@ -133,11 +178,10 @@ body {
   }
 
   .output-tab {
-    .current-code-component{
+    .current-code-component {
       margin-top: 15px;
     }
   }
-
 }
 
 @media only screen and (max-width: 800px) {

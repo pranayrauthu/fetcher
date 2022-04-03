@@ -3,7 +3,7 @@
         <div class="md-title">C#</div>
         <md-content class="md-elevation-1">
             <codemirror :value="outputCode" :options="editorOptions"></codemirror>
-            <md-button class="md-primary" @click="$emit('copy-output-code', outputCode)">copy</md-button>
+            <v-btn @click="$emit('copy-output-code', outputCode)">copy</v-btn>
         </md-content>
     </div>
 </template>

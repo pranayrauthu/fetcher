@@ -3,7 +3,7 @@
         <div class="md-title">HTTP</div>
         <md-content class="md-elevation-1">
             <codemirror :value="outputCodeStr" :options="editorOptions"></codemirror>
-            <md-button class="md-primary" @click="$emit('copy-output-code', outputCodeStr)">copy</md-button>
+            <v-btn @click="$emit('copy-output-code', outputCodeStr)">copy</v-btn>
         </md-content>
     </div>
 </template>

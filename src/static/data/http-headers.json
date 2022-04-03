@@ -36,33 +36,17 @@
     "Accept-Language": [
         "en-US"
     ],
-    "Accept-Datetime": [
-        ""
-    ],
-    "Access-Control-Request-Method": [
-        ""
-    ],
-    "Access-Control-Request-Headers": [
-        ""
-    ],
-    "Authorization": [
-        ""
-    ],
-    "Cache-Control": [
-        ""
-    ],
+    "Accept-Datetime": [],
+    "Access-Control-Request-Method": [],
+    "Access-Control-Request-Headers": [],
+    "Authorization": [],
+    "Cache-Control": [],
     "Connection": [
         "keep-alive"
     ],
-    "Cookie": [
-        ""
-    ],
-    "Content-Length": [
-        ""
-    ],
-    "Content-MD5": [
-        ""
-    ],
+    "Cookie": [],
+    "Content-Length": [],
+    "Content-MD5": [],
     "Content-Type": [
         "application/javascript",
         "application/json",
@@ -91,67 +75,27 @@
         "image/jpeg",
         "image/gif"
     ],
-    "Date": [
-        ""
-    ],
-    "Expect": [
-        ""
-    ],
-    "Forwarded": [
-        ""
-    ],
-    "From": [
-        ""
-    ],
-    "Host": [
-        ""
-    ],
-    "If-Match": [
-        ""
-    ],
-    "If-Modified-Since": [
-        ""
-    ],
-    "If-None-Match": [
-        ""
-    ],
-    "If-Range": [
-        ""
-    ],
-    "If-Unmodified-Since": [
-        ""
-    ],
-    "Max-Forwards": [
-        ""
-    ],
-    "Origin": [
-        ""
-    ],
+    "Date": [],
+    "Expect": [],
+    "Forwarded": [],
+    "From": [],
+    "Host": [],
+    "If-Match": [],
+    "If-Modified-Since": [],
+    "If-None-Match": [],
+    "If-Range": [],
+    "If-Unmodified-Since": [],
+    "Max-Forwards": [],
+    "Origin": [],
     "Pragma": [
         "no-cache"
     ],
-    "Proxy-Authorization": [
-        ""
-    ],
-    "Range": [
-        ""
-    ],
-    "Referer": [
-        ""
-    ],
-    "TE": [
-        ""
-    ],
-    "User-Agent": [
-        ""
-    ],
-    "Upgrade": [
-        ""
-    ],
-    "Via": [
-        ""
-    ],
-    "Warning": [
-        ""
-    ]
+    "Proxy-Authorization": [],
+    "Range": [],
+    "Referer": [],
+    "TE": [],
+    "User-Agent": [],
+    "Upgrade": [],
+    "Via": [],
+    "Warning": []
 }

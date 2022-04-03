@@ -1,1 +1,1 @@
-export const API_BASE = 'https://fetcher-api.pranayrauthu.now.sh/api';
+export const API_BASE = 'https://fetcher-api-pranayrauthu.vercel.app/api';

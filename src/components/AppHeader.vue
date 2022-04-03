@@ -1,61 +1,70 @@
 <template>
-    <div>
-        <md-toolbar class="md-primary app-header">
-      <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
-        <md-icon :md-src="menuIcon" class="app-menu"/>
-      </md-button>
+  <div>
+    <v-app-bar
+      dark
+      elevation="1"
+      class="app-header"
+    >
+      <v-app-bar-nav-icon @click="menuVisible = !menuVisible"></v-app-bar-nav-icon>
       <span class="app-logo">
         <md-icon :md-src="appLogo" />
       </span>
-      <a href="https://github.com/pranayrauthu/fetcher" target="_blank" class="github-link">
-        <md-button class="md-icon-button">
-          <md-icon :md-src="githubLogo"></md-icon>
-        </md-button>
+      <v-spacer></v-spacer>
+      <a
+        href="https://github.com/pranayrauthu/fetcher"
+        target="_blank"
+      >
+        <v-btn icon>
+          <v-icon dark>mdi-github</v-icon>
+        </v-btn>
       </a>
-      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fpranayrauthu%2Ffetcher&via=pranay_rauthu&text=generate%20HTTP%20request%20code%20with&hashtags=fetcher" target="_blank">
-        <md-button class="md-icon-button">
-          <md-icon :md-src="shareIcon"></md-icon>
-        </md-button>
+      <a
+        href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fpranayrauthu%2Ffetcher&via=pranay_rauthu&text=generate%20HTTP%20request%20code%20with&hashtags=fetcher"
+        target="_blank"
+      >
+        <v-btn icon>
+          <v-icon dark>mdi-share-variant</v-icon>
+        </v-btn>
       </a>
-    </md-toolbar>
-    <md-drawer :md-active.sync="menuVisible">
+    </v-app-bar>
+    <v-navigation-drawer
+      v-model="menuVisible"
+      absolute
+      bottom
+      temporary
+    >
+      <v-list nav dense>
+        <v-list-item-group>
+          <v-list-item>
+            <v-list-item-title
+              @click="onSaveClick"
+            >Save</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
 
-        <md-list>
-          <md-list-item>
-            <span class="md-list-item-text"></span>
-          </md-list-item>
-        </md-list>
-        <md-list>
-          <md-list-item>
-            <md-button class="nav-btn-save" @click="onSaveClick">save</md-button>
-          </md-list-item>
-        </md-list>
-
-      </md-drawer>
-    </div>
+    </v-navigation-drawer>
+  </div>
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
-    name: 'AppHeader',
-    data(){
-        return {
-            appLogo: STATIC_ICONS_BASE + 'app-logo.svg',
-            shareIcon: STATIC_ICONS_BASE + 'share2.svg',
-            githubLogo: STATIC_ICONS_BASE + 'github.svg',
-            menuIcon: STATIC_ICONS_BASE + 'menuIcon.svg',
-            menuVisible: false,
-        }
-    },
-    methods: {
-      ...mapActions(['saveRequest']),
-      onSaveClick(){
-        this.menuVisible = false;
-        this.saveRequest();
-      }
+  name: 'AppHeader',
+  data() {
+    return {
+      appLogo: STATIC_ICONS_BASE + 'app-logo.svg',
+      menuVisible: false,
     }
+  },
+  methods: {
+    ...mapActions(['saveRequest']),
+    onSaveClick() {
+      this.menuVisible = false;
+      this.saveRequest();
+    }
+  }
 }
 </script>
 
@@ -66,26 +75,12 @@ export default {
 
   .app-logo {
     margin: auto;
+    margin-top: 18px;
     margin-left: 0px;
 
     .md-icon {
       width: 100px;
     }
   }
-
-  .github-link {
-    color: white;
-  }
-
 }
-
-.md-drawer {
-    width: 230px;
-    max-width: calc(100vw - 125px);
-
-    .nav-btn-save {
-        width: 100%;
-    }
-}
-
 </style>

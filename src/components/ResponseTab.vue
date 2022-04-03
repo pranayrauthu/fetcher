@@ -13,10 +13,9 @@
                 :value="response"
                 :options="editorOptions"
             ></codemirror>
-            <md-button
-                class="md-primary"
+            <v-btn
                 @click="$emit('copy-output-code', response)"
-            >copy</md-button>
+            >copy</v-btn>
         </md-content>
     </div>
 </template>

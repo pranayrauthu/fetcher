@@ -11,7 +11,7 @@ function optionJSONStr(options) {
     }
 
     if (options.enableMode) {
-        retObj.mode = this.selectedMode;
+        retObj.mode = options.selectedMode;
     }
     return JSON.stringify(retObj, null, 2);
 }

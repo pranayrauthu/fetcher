@@ -1,34 +1,24 @@
 <template>
-  <div>
-    <md-field class="fetch-url-input">
-      <label>url</label>
-      <md-input v-model="fetchUrl"></md-input>
-    </md-field>
-    <br/>
-    <md-field>
-      <label for="method">method</label>
-      <md-select v-model="method" name="method" id="method" class="http-method-input">
-        <md-option
-          :value='httpMethod'
-          :key="i" v-for="(httpMethod, i) in httpMethods"
-        >{{httpMethod}}</md-option>
-      </md-select>
-    </md-field>
-    <br/>
-    <md-field>
-      <label>body</label>
-      <md-textarea v-model="requestBody" class="request-body"></md-textarea>
-    </md-field>
-  </div>
+  <v-container fluid>
+    <v-text-field
+      label="url"
+      v-model="fetchUrl"
+    ></v-text-field>
+    <br />
+    <v-select solo :items="httpMethods" label="method" v-model="method">
+    </v-select>
+    <br />
+    <v-textarea solo label="body" v-model="requestBody" class="request-body"></v-textarea>
+  </v-container>
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+import { mapActions } from 'vuex';
 import router from './../router';
-import {httpMethods} from './../enums/http-methods';
+import { httpMethods } from './../enums/http-methods';
 
 export default {
-  computed:{
+  computed: {
     fetchUrl: {
       get: function () {
         return this.$store.getters.fetchUrl;
@@ -62,7 +52,7 @@ export default {
   methods: {
     ...mapActions(['getSavedRequest'])
   },
-  mounted(){
+  mounted() {
     router.onReady(() => this.getSavedRequest());
   }
 };
