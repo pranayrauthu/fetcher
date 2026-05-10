@@ -1,78 +1,60 @@
 <template>
-  <div>
-    <md-field class="fetch-url-input">
-      <label>url</label>
-      <md-input v-model="fetchUrl"></md-input>
-    </md-field>
-    <br/>
-    <md-field>
-      <label for="method">method</label>
-      <md-select v-model="method" name="method" id="method" class="http-method-input">
-        <md-option
-          :value='httpMethod'
-          :key="i" v-for="(httpMethod, i) in httpMethods"
-        >{{httpMethod}}</md-option>
-      </md-select>
-    </md-field>
-    <br/>
-    <md-field>
-      <label>body</label>
-      <md-textarea v-model="requestBody" class="request-body"></md-textarea>
-    </md-field>
+  <div class="pa-2">
+    <v-text-field
+      v-model="store.inputData.fetchUrl"
+      label="URL"
+      variant="outlined"
+      density="comfortable"
+      placeholder="https://api.example.com"
+      class="mb-4"
+    ></v-text-field>
+
+    <v-select
+      v-model="store.inputData.method"
+      :items="httpMethodsList"
+      label="Method"
+      variant="outlined"
+      density="comfortable"
+      class="mb-4"
+    ></v-select>
+
+    <v-textarea
+      v-model="store.inputData.requestBody"
+      label="Body"
+      variant="outlined"
+      density="comfortable"
+      rows="5"
+      class="request-body"
+      auto-grow
+    ></v-textarea>
+    
+    <v-btn
+      color="primary"
+      block
+      class="mt-4"
+      @click="store.fetchResponse"
+    >
+      Send Request
+    </v-btn>
   </div>
 </template>
 
-<script>
-import {mapActions} from 'vuex';
-import router from './../router';
-import {httpMethods} from './../enums/http-methods';
+<script setup>
+import { onMounted } from 'vue';
+import { useAppStore } from '../store';
+import { httpMethods } from '../enums/http-methods';
 
-export default {
-  computed:{
-    fetchUrl: {
-      get: function () {
-        return this.$store.getters.fetchUrl;
-      },
-      set: function (value) {
-        this.$store.commit('setFetchUrl', value);
-      }
-    },
-    method: {
-      get: function () {
-        return this.$store.getters.method;
-      },
-      set: function (value) {
-        this.$store.commit('setMethod', value);
-      }
-    },
-    requestBody: {
-      get: function () {
-        return this.$store.getters.requestBody;
-      },
-      set: function (value) {
-        this.$store.commit('setRequestBody', value);
-      }
-    }
-  },
-  data: function () {
-    return {
-      httpMethods: Object.values(httpMethods)
-    };
-  },
-  methods: {
-    ...mapActions(['getSavedRequest'])
-  },
-  mounted(){
-    router.onReady(() => this.getSavedRequest());
-  }
-};
+const store = useAppStore();
+const httpMethodsList = Object.values(httpMethods);
+
+onMounted(() => {
+  store.getSavedRequest();
+});
 </script>
 
 <style lang="scss" scoped>
-.request-body {
-  font-family: monospace;
+.request-body :deep(textarea) {
+  font-family: "Source Code Pro", monospace;
   font-size: 14px;
 }
 </style>
-
-

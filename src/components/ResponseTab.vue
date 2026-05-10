@@ -1,58 +1,53 @@
 <template>
-    <div class="response-tab">
-        <div class="md-title">Response (beta)</div>
-        <div>
-            <md-button
-                @click="fetchResponse"
-                class="md-raised md-primary send-req-btn"
-                :disabled="!inputData.fetchUrl"
-            >SEND</md-button>
-        </div>
-        <md-content class="md-elevation-1">
-            <codemirror
-                :value="response"
-                :options="editorOptions"
-            ></codemirror>
-            <md-button
-                class="md-primary"
-                @click="$emit('copy-output-code', response)"
-            >copy</md-button>
-        </md-content>
+  <div class="response-tab">
+    <div class="d-flex align-center justify-space-between mb-4">
+      <h2 class="text-h6">Response (beta)</h2>
+      <v-btn
+        @click="store.fetchResponse"
+        color="primary"
+        :disabled="!store.fetchUrl"
+      >
+        SEND
+      </v-btn>
     </div>
+    
+    <v-sheet elevation="1" class="pa-0 overflow-hidden rounded">
+      <codemirror
+        v-model="store.response"
+        :extensions="extensions"
+        :style="{ height: '400px' }"
+        disabled
+      />
+      <v-divider></v-divider>
+      <div class="pa-2 d-flex justify-end">
+        <v-btn
+          color="primary"
+          variant="text"
+          prepend-icon="mdi-content-copy"
+          @click="$emit('copy-output-code', store.response)"
+        >
+          copy
+        </v-btn>
+      </div>
+    </v-sheet>
+  </div>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue';
+import { useAppStore } from '../store';
+import { Codemirror } from 'vue-codemirror';
+import { StreamLanguage } from '@codemirror/language';
+import { http } from '@codemirror/legacy-modes/mode/http';
 
-require('codemirror/mode/http/http');
-import get from 'lodash/get';
-import { mapGetters, mapActions } from 'vuex';
+const store = useAppStore();
+const extensions = [StreamLanguage.define(http)];
 
-export default {
-    name: 'ResponseTab',
-    data: function () {
-        return {
-            editorOptions: {
-                mode: 'message/http',
-                tabSize: 2,
-                lineWrapping: true,
-                lineNumbers: true,
-                autoRefresh: true
-            },
-        };
-    },
-    computed: {
-        ...mapGetters(['inputData','response'])
-    },
-    methods: {
-        ...mapActions(['fetchResponse'])
-    }
-};
+defineEmits(['copy-output-code']);
 </script>
 
 <style lang="scss" scoped>
-.output-code {
-  padding: 10px;
+.response-tab {
+  padding: 8px;
 }
 </style>
-
-

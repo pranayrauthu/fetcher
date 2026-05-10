@@ -1,55 +1,63 @@
 <template>
-    <div class="csharp-tab">
-        <div class="md-title">C#</div>
-        <md-content class="md-elevation-1">
-            <codemirror :value="outputCode" :options="editorOptions"></codemirror>
-            <md-button class="md-primary" @click="$emit('copy-output-code', outputCode)">copy</md-button>
-        </md-content>
-    </div>
+  <div class="csharp-tab">
+    <div class="text-h6 mb-2">C#</div>
+    <v-card variant="outlined" class="pa-4">
+      <codemirror
+        v-model="outputCode"
+        :extensions="extensions"
+        disabled
+        :style="{ height: '400px' }"
+      />
+      <v-btn
+        color="primary"
+        class="mt-4"
+        @click="$emit('copy-output-code', outputCode)"
+      >
+        copy
+      </v-btn>
+    </v-card>
+  </div>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue'
+import { Codemirror } from 'vue-codemirror'
+import { StreamLanguage } from '@codemirror/language'
+import { csharp } from '@codemirror/legacy-modes/mode/clike'
+import { useAppStore } from '../store'
 
-require('codemirror/mode/clike/clike');
-import { mapGetters } from 'vuex';
+const store = useAppStore()
+const extensions = [StreamLanguage.define(csharp)]
 
-export default {
-    name: 'CsharpCodeTab',
-    data: function () {
-        return {
-            editorOptions: {
-                mode: 'text/x-csharp',
-                tabSize: 2,
-                lineWrapping: true,
-                lineNumbers: true,
-                autoRefresh: true
-            }
-        }
-    },
-    computed: {
-        ...mapGetters(['inputData']),
-        computedHttpBodyStr: function () {
-            const { method, requestBody } = this.inputData;
-            if(method === 'GET'){
-                return '';
-            }
-            return `, new StringContent("${requestBody}")`;
-        },
-        computedHttpMethodStr: function () {
-            const { method } = this.inputData;
-            return method.substr(0, 1) + method.substr(1).toLowerCase()
-        },
-        computedHeaderStr: function () {
-            return (
-                Object.keys(this.inputData.requestHeaders)
-                .map(h => {
-                    return `httpClient.DefaultRequestHeaders.Add("${h}", "${this.inputData.requestHeaders[h]}");`;
-                }) || ['']).join('\n\t\t\t\t');
-        },
-        outputCode: function () {
-            return `using System;\nusing System.Net.Http;\n\nnamespace Fetcher\n{\n\tclass Program\n\t{\n\t\tstatic void Main(string[] args)\n\t\t{\n\t\t\tusing (var httpClient = new HttpClient())\n\t\t\t{\n\t\t\t\t${this.computedHeaderStr}\n\t\t\t\tvar response = httpClient.${this.computedHttpMethodStr}StringAsync(new Uri("${this.inputData.fetchUrl}")${this.computedHttpBodyStr}).Result;\n\t\t\t\t// your code\n\n\t\t\t}\n\t\t}\n\t}\n}`;
-        }
-    }
-};
+const computedHttpBodyStr = computed(() => {
+  const { method, requestBody } = store.inputData
+  if (method === 'GET') {
+    return ''
+  }
+  return `, new StringContent("${requestBody}")`
+})
+
+const computedHttpMethodStr = computed(() => {
+  const { method } = store.inputData
+  return method.charAt(0).toUpperCase() + method.slice(1).toLowerCase()
+})
+
+const computedHeaderStr = computed(() => {
+  const headers = store.inputData.requestHeaders
+  const headerKeys = Object.keys(headers)
+  if (headerKeys.length === 0) {
+    return ''
+  }
+  return headerKeys
+    .map(h => {
+      return `httpClient.DefaultRequestHeaders.Add("${h}", "${headers[h]}");`
+    })
+    .join('\n\t\t\t\t')
+})
+
+const outputCode = computed(() => {
+  return `using System;\nusing System.Net.Http;\n\nnamespace Fetcher\n{\n\tclass Program\n\t{\n\t\tstatic void Main(string[] args)\n\t\t{\n\t\t\tusing (var httpClient = new HttpClient())\n\t\t\t{\n\t\t\t\t${computedHeaderStr.value}\n\t\t\t\tvar response = httpClient.${computedHttpMethodStr.value}StringAsync(new Uri("${store.inputData.fetchUrl}")${computedHttpBodyStr.value}).Result;\n\t\t\t\t// your code\n\n\t\t\t}\n\t\t}\n\t}\n}`
+})
+
+defineEmits(['copy-output-code'])
 </script>
-

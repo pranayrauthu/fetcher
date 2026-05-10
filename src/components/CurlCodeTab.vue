@@ -1,98 +1,105 @@
 <template>
-    <div class="curl-tab">
-        <div class="md-title">cURL</div>
-        <md-checkbox
-            v-model="isInsecure"
-            class="insecure-toggle"
-            title="Allow insecure server connections when using SSL"
-        >insecure</md-checkbox>
-        <md-checkbox
-            v-model="isVerbose"
-            class="verbose-toggle"
-            title="Output all the details of the request"
-        >verbose</md-checkbox>
-        <md-checkbox 
-            v-model="copyToClip"
-            class="copy-to-clip-toggle"
-            title="copy response to clipboard (might not work in few systems)"
-        >copy to clip</md-checkbox>
-        <md-checkbox
-            v-model="dumpHeaders"
-            class="dump-headers-toggle"
-        >dump-headers</md-checkbox>
-        <md-content class="md-elevation-1">
-            <codemirror :value="computedCurlCode" :options="editorOptions"></codemirror>
-            <md-button
-                class="md-primary"
-                @click="$emit('copy-output-code', computedCurlCode)"
-            >copy</md-button>
-        </md-content>
+  <div class="curl-tab">
+    <div class="text-h6 mb-2">cURL</div>
+    <div class="d-flex flex-wrap mb-2">
+      <v-checkbox
+        v-model="isInsecure"
+        label="insecure"
+        hide-details
+        density="compact"
+        title="Allow insecure server connections when using SSL"
+        class="mr-4"
+      />
+      <v-checkbox
+        v-model="isVerbose"
+        label="verbose"
+        hide-details
+        density="compact"
+        title="Output all the details of the request"
+        class="mr-4"
+      />
+      <v-checkbox
+        v-model="copyToClip"
+        label="copy to clip"
+        hide-details
+        density="compact"
+        title="copy response to clipboard (might not work in few systems)"
+        class="mr-4"
+      />
+      <v-checkbox
+        v-model="dumpHeaders"
+        label="dump-headers"
+        hide-details
+        density="compact"
+      />
     </div>
+    <v-card variant="outlined" class="pa-4">
+      <codemirror
+        v-model="computedCurlCode"
+        :extensions="extensions"
+        disabled
+        :style="{ height: '400px' }"
+      />
+      <v-btn
+        color="primary"
+        class="mt-4"
+        @click="$emit('copy-output-code', computedCurlCode)"
+      >
+        copy
+      </v-btn>
+    </v-card>
+  </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue'
+import { Codemirror } from 'vue-codemirror'
+import { StreamLanguage } from '@codemirror/language'
+import { shell } from '@codemirror/legacy-modes/mode/shell'
+import { useAppStore } from '../store'
 
-require('codemirror/mode/shell/shell');
-import get from 'lodash/get';
-import { mapGetters } from 'vuex';
+const store = useAppStore()
+const extensions = [StreamLanguage.define(shell)]
 
-export default {
-    name: 'CurlCodeTab',
-    data: function () {
-        return {
-            isInsecure: false,
-            isVerbose: false,
-            copyToClip: false,
-            dumpHeaders: false,
-            editorOptions: {
-                mode: 'text/x-sh',
-                tabSize: 2,
-                lineWrapping: true,
-                lineNumbers: true,
-                autoRefresh: true
-            }
-        };
-    },
-    computed: {
-        ...mapGetters(['inputData']),
-        computedHeadersStr: function () {
-            const headers = Object.keys(this.inputData.requestHeaders);
-            if (headers.length > 0) {
-                return headers.reduce((accumulator, currentValue) => (
-                    accumulator + `-H "${currentValue}: ${this.inputData.requestHeaders[currentValue]}" `
-                ), ' ');
-            }
-            return ' ';
-        },
-        computedRequestBodyStr: function () {
-            let { requestBody = '' } = this.inputData;
-            requestBody = requestBody.replace(/"/g,`\\"`);
-            return (requestBody) ? (`-d "${requestBody}" `) : ('');
-        },
-        computedInsecureStr: function () {
-            return (this.isInsecure) ? ('--insecure ') : ('');
-        },
-        computedVerboseStr: function () {
-            return (this.isVerbose) ? ('--verbose ') : ('');
-        },
-        computedDumpHeaderStr: function () {
-            return (this.dumpHeaders) ? ('--dump-header - ') : ('');
-        },
-        computedCopyToClipStr: function () {
-            const platform = (get(window, 'navigator.platform') || '').toLowerCase();
-            let copyToClip = ' | clip';
-            if(platform.includes('mac')){
-                copyToClip = ' | pbclip';
-            }
-            return (this.copyToClip) ? (copyToClip) : ('');
-        },
-        computedCurlCode: function () {
-            return `curl ${this.computedInsecureStr}${this.computedVerboseStr}${this.computedDumpHeaderStr}-X${this.inputData.method}`+
-            `${this.computedHeadersStr}${this.computedRequestBodyStr}"`+
-            `${this.inputData.fetchUrl}"${ this.computedCopyToClipStr }`;
-        }
-    }
-};
+const isInsecure = ref(false)
+const isVerbose = ref(false)
+const copyToClip = ref(false)
+const dumpHeaders = ref(false)
+
+const computedHeadersStr = computed(() => {
+  const headers = Object.keys(store.inputData.requestHeaders)
+  if (headers.length > 0) {
+    return headers.reduce((accumulator, currentValue) => (
+      accumulator + `-H "${currentValue}: ${store.inputData.requestHeaders[currentValue]}" `
+    ), ' ')
+  }
+  return ' '
+})
+
+const computedRequestBodyStr = computed(() => {
+  let requestBody = store.inputData.requestBody || ''
+  requestBody = requestBody.replace(/"/g, '\\"')
+  return requestBody ? `-d "${requestBody}" ` : ''
+})
+
+const computedInsecureStr = computed(() => (isInsecure.value ? '--insecure ' : ''))
+const computedVerboseStr = computed(() => (isVerbose.value ? '--verbose ' : ''))
+const computedDumpHeaderStr = computed(() => (dumpHeaders.value ? '--dump-header - ' : ''))
+
+const computedCopyToClipStr = computed(() => {
+  const platform = (window.navigator?.platform || '').toLowerCase()
+  let clipCmd = ' | clip'
+  if (platform.includes('mac')) {
+    clipCmd = ' | pbclip'
+  }
+  return copyToClip.value ? clipCmd : ''
+})
+
+const computedCurlCode = computed(() => {
+  return `curl ${computedInsecureStr.value}${computedVerboseStr.value}${computedDumpHeaderStr.value}-X${store.inputData.method}${computedHeadersStr.value}${computedRequestBodyStr.value}"${store.inputData.fetchUrl}"${computedCopyToClipStr.value}`
+})
+
+defineEmits(['copy-output-code'])
 </script>
 
 <style lang="scss" scoped>
@@ -100,5 +107,3 @@ export default {
   padding: 10px;
 }
 </style>
-
-

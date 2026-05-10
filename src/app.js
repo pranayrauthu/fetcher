@@ -1,52 +1,41 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import { createVuetify } from 'vuetify';
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
 
-import {
-	MdButton,
-	MdContent,
-	MdTabs,
-	MdToolbar,
-	MdIcon,
-	MdSnackbar,
-	MdField,
-	MdCheckbox,
-	MdAutocomplete,
-	MdMenu,
-	MdList,
-	MdDrawer
-} from 'vue-material/dist/components';
-import VueCodeMirror from 'vue-codemirror-lite';
-import 'vue-material/dist/vue-material.min.css';
-
-require('codemirror/addon/display/autorefresh');
-
-[
-	VueCodeMirror,
-	MdButton,
-	MdContent,
-	MdTabs,
-	MdToolbar,
-	MdIcon,
-	MdSnackbar,
-	MdField,
-	MdCheckbox,
-	MdAutocomplete,
-	MdMenu,
-	MdList,
-	MdDrawer
-].forEach(c => Vue.use(c));
+// Styles
+import 'vuetify/styles';
+import '@mdi/font/css/materialdesignicons.css';
 
 import router from './router';
-import store from './store';
-import app from './app.vue';
+import App from './app.vue';
 
-
-const APP = new Vue({
-	el: '#fetcher-app',
-	router,
-	store,
-	render: h => h(app)
+const vuetify = createVuetify({
+  components,
+  directives,
+  theme: {
+    defaultTheme: 'light',
+    themes: {
+      light: {
+        colors: {
+          primary: '#ff4500',
+          accent: '#1a11e8',
+        },
+      },
+    },
+  },
 });
 
-if (!IS_PROD) {
-	window.FETCHER_APP = APP;
+const app = createApp(App);
+
+app.use(createPinia());
+app.use(router);
+app.use(vuetify);
+
+app.mount('#fetcher-app');
+
+// @ts-ignore
+if (import.meta.env.DEV) {
+  window.FETCHER_APP = app;
 }

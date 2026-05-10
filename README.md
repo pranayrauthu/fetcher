@@ -1,19 +1,31 @@
 # Fetcher
 
-generate HTTP request code for various languages. try it for free [here](https://pranayrauthu.github.io/fetcher/).
+Generate HTTP request code for various languages. Try it for free [here](https://pranayrauthu.github.io/fetcher/).
+
+Modernized with **Vue 3**, **Vite**, **Vuetify 3**, and **Pinia**.
 
 **Generates Snippets for**
 
-- JavaScript Fetch
+- JavaScript Fetch (Promises & Async/Await)
 - cURL
 - HTTP
 - C#
 - PowerShell
-- Java
+- Java (HttpURLConnection & RestTemplate)
 
 **Other Features**
 
-- HTTP Response (beta)
+- Live HTTP Response viewer
+- Shareable request permalinks
+
+**Development**
+
+```bash
+npm install
+npm run dev   # Start development server
+npm run build # Build for production
+npm test      # Run unit tests with Vitest
+```
 
 **License**
 

@@ -1,62 +1,65 @@
 <template>
-    <div class="java-tab">
-        <div class="md-title">Java</div>
-        <md-field>
-            <label>client type</label>
-            <md-select name="method" v-model="clientType">
-                <md-option :value='value' :key="i" v-for="({value, label}, i) in clientTypeOptions">{{label}}</md-option>
-            </md-select>
-        </md-field>
-        <md-content class="md-elevation-1">
-            <codemirror :value="outputCode" :options="editorOptions"></codemirror>
-            <md-button class="md-primary" @click="$emit('copy-output-code', outputCode)">copy</md-button>
-        </md-content>
-    </div>
+  <div class="java-tab">
+    <div class="text-h6 mb-2">Java</div>
+    <v-select
+      v-model="clientType"
+      :items="clientTypeOptions"
+      item-title="label"
+      item-value="value"
+      label="client type"
+      variant="outlined"
+      density="compact"
+    />
+    <v-card variant="outlined" class="pa-4">
+      <codemirror
+        v-model="outputCode"
+        :extensions="extensions"
+        disabled
+        :style="{ height: '400px' }"
+      />
+      <v-btn
+        color="primary"
+        class="mt-4"
+        @click="$emit('copy-output-code', outputCode)"
+      >
+        copy
+      </v-btn>
+    </v-card>
+  </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue'
+import { Codemirror } from 'vue-codemirror'
+import { java } from '@codemirror/lang-java'
+import { useAppStore } from '../../store'
+import { httpUrlConnectionCode } from './http-url-con-output-code'
+import { restTemplateCode } from './rest-template-output-code'
 
-require('codemirror/mode/clike/clike');
-import { mapGetters } from 'vuex';
-import { httpUrlConnectionCode } from './http-url-con-output-code';
-import { restTemplateCode } from './rest-template-output-code';
+const store = useAppStore()
+const extensions = [java()]
 
-export default {
-    name: 'JavaCodeTab',
-    data: function () {
-        return {
-            clientType: 'http-url-con',
-            clientTypeOptions: [
-                {
-                    value: 'http-url-con',
-                    label: 'HttpURLConnection'
-                },
-                {
-                    value: 'rest-template',
-                    label: 'Rest Template'
-                }
-            ],
-            editorOptions: {
-                mode: 'text/x-java',
-                tabSize: 2,
-                lineWrapping: true,
-                lineNumbers: true,
-                autoRefresh: true
-            }
-        }
-    },
-    computed: {
-        ...mapGetters(['inputData']),
-        outputCode: function () {
-            const options = {
-                ...this.inputData
-            };
-            if(this.clientType === 'rest-template'){
-                return restTemplateCode(options);
-            }
-            return httpUrlConnectionCode(options);
-        }
-    }
-};
+const clientType = ref('http-url-con')
+const clientTypeOptions = [
+  {
+    value: 'http-url-con',
+    label: 'HttpURLConnection'
+  },
+  {
+    value: 'rest-template',
+    label: 'Rest Template'
+  }
+]
+
+const outputCode = computed(() => {
+  const options = {
+    ...store.inputData
+  }
+  if (clientType.value === 'rest-template') {
+    return restTemplateCode(options)
+  }
+  return httpUrlConnectionCode(options)
+})
+
+defineEmits(['copy-output-code'])
 </script>
-

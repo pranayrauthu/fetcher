@@ -1,74 +1,91 @@
 <template>
-    <div class="powershell-tab">
-        <div class="md-title">PowerShell</div>
-        <md-checkbox 
-            v-model="copyToClip"
-            class="copy-to-clip-toggle"
-            title="copy the output to clipboard"
-        >copy to clip</md-checkbox>
-        <md-checkbox 
-            v-model="expandContent"
-            class="expand-content-toggle"
-            title="output only expanded content"
-        >expand content</md-checkbox>
-        <md-content class="md-elevation-1">
-            <codemirror :value="computedPowerShellCode" :options="editorOptions"></codemirror>
-            <md-button class="md-primary" @click="$emit('copy-output-code', computedPowerShellCode)">copy</md-button>
-        </md-content>
+  <div class="powershell-tab">
+    <div class="text-h6 mb-2">PowerShell</div>
+    <div class="d-flex flex-wrap mb-2">
+      <v-checkbox
+        v-model="copyToClip"
+        label="copy to clip"
+        hide-details
+        density="compact"
+        title="copy the output to clipboard"
+        class="mr-4"
+      />
+      <v-checkbox
+        v-model="expandContent"
+        label="expand content"
+        hide-details
+        density="compact"
+        title="output only expanded content"
+      />
     </div>
+    <v-card variant="outlined" class="pa-4">
+      <codemirror
+        v-model="computedPowerShellCode"
+        :extensions="extensions"
+        disabled
+        :style="{ height: '400px' }"
+      />
+      <v-btn
+        color="primary"
+        class="mt-4"
+        @click="$emit('copy-output-code', computedPowerShellCode)"
+      >
+        copy
+      </v-btn>
+    </v-card>
+  </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue'
+import { Codemirror } from 'vue-codemirror'
+import { StreamLanguage } from '@codemirror/language'
+import { shell } from '@codemirror/legacy-modes/mode/shell'
+import { useAppStore } from '../store'
 
-require('codemirror/mode/powershell/powershell');
-import { mapGetters } from 'vuex';
+const store = useAppStore()
+const extensions = [StreamLanguage.define(shell)]
 
-export default {
-    name: 'PowerShellCodeTab',
-    data: function () {
-        return {
-            copyToClip: false,
-            expandContent: false,
-            editorOptions: {
-                mode: 'application/x-powershell',
-                tabSize: 2,
-                lineWrapping: true,
-                lineNumbers: true,
-                autoRefresh: true
-            }
-        };
-    },
-    computed: {
-        ...mapGetters(['inputData']),
-        computedBodyStr: function () {
-            const { requestBody } = this.inputData;
-            return (requestBody) ? (` -Body '${requestBody}' `) : ('');
-        },
-        computedHeaderStr: function () {
-            const headers = Object.keys(this.inputData.requestHeaders);
-            if (headers.length > 0) {
-                return headers.reduce((accumulator, currentValue) => (
-                    accumulator + `"${currentValue}"="${this.inputData.requestHeaders[currentValue]}";`
-                ), '-Headers @{')+'}';
-            }
-            return '';
-        },
-        computedExpandContentStr: function () {
-            const expandContent = this.expandContent ? ' | Select-Object -Expand Content' : '';
-            return expandContent;
-        },
-        computedCopyToClipStr: function () {
-            const copyToClip = this.copyToClip ? ' | clip' : '';
-            return copyToClip;
-        },
-        computedPowerShellCode: function () {
-            return (`Invoke-WebRequest -Uri '${this.inputData.fetchUrl}' ` +
-            `-Method '${this.inputData.method}'${this.computedHeaderStr}${this.computedBodyStr}` +
-            `${this.computedExpandContentStr}` +
-            `${this.computedCopyToClipStr}`);
-        }
-    }
-};
+const copyToClip = ref(false)
+const expandContent = ref(false)
+
+const computedBodyStr = computed(() => {
+  const { requestBody } = store.inputData
+  return requestBody ? ` -Body '${requestBody}' ` : ''
+})
+
+const computedHeaderStr = computed(() => {
+  const headers = Object.keys(store.inputData.requestHeaders)
+  if (headers.length > 0) {
+    return (
+      headers.reduce(
+        (accumulator, currentValue) =>
+          accumulator + `"${currentValue}"="${store.inputData.requestHeaders[currentValue]}";`,
+        '-Headers @{'
+      ) + '}'
+    )
+  }
+  return ''
+})
+
+const computedExpandContentStr = computed(() => {
+  return expandContent.value ? ' | Select-Object -Expand Content' : ''
+})
+
+const computedCopyToClipStr = computed(() => {
+  return copyToClip.value ? ' | clip' : ''
+})
+
+const computedPowerShellCode = computed(() => {
+  return (
+    `Invoke-WebRequest -Uri '${store.inputData.fetchUrl}' ` +
+    `-Method '${store.inputData.method}'${computedHeaderStr.value}${computedBodyStr.value}` +
+    `${computedExpandContentStr.value}` +
+    `${computedCopyToClipStr.value}`
+  )
+})
+
+defineEmits(['copy-output-code'])
 </script>
 
 <style lang="scss" scoped>
@@ -76,5 +93,3 @@ export default {
   padding: 10px;
 }
 </style>
-
-

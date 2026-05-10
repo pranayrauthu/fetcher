@@ -1,95 +1,95 @@
 <template>
-  <md-content>
+  <v-app>
+    <AppHeader />
 
-    <app-header/>
+    <v-main class="app-container">
+      <v-container fluid>
+        <v-row>
+          <v-col cols="12" md="4">
+            <v-card class="pa-4 mb-4" elevation="2">
+              <RequestInfoForm />
+              <HeaderForm />
+            </v-card>
+          </v-col>
+          
+          <v-col cols="12" md="8">
+            <v-card class="pa-4" elevation="2">
+              <v-tabs v-model="activeTab" color="primary">
+                <v-tab value="response" to="/response">Response</v-tab>
+                <v-tab value="fetch" to="/fetch">JavaScript</v-tab>
+                <v-tab value="curl" to="/curl">cURL</v-tab>
+                <v-tab value="csharp" to="/csharp">C#</v-tab>
+                <v-tab value="http" to="/http">HTTP</v-tab>
+                <v-tab value="powershell" to="/powershell">PowerShell</v-tab>
+                <v-tab value="java" to="/java">Java</v-tab>
+              </v-tabs>
 
-    <md-content class="app-container">
-      <md-content class="input-tab md-elevation-2">
-        <RequestInfoForm />
-        <HeaderForm />
-      </md-content>
-      <md-content class="output-tab md-elevation-2">
-        <md-tabs :md-active-tab="'tab-'+$route.path.slice(1)">
-          <md-tab id="tab-response" md-label="Response" to="/response">
-          </md-tab>
-          <md-tab id="tab-fetch" md-label="JavaScript" to="/fetch">
-          </md-tab>
-          <md-tab id="tab-curl" md-label="cURL" to="/curl">
-          </md-tab>
-          <md-tab id="tab-csharp" md-label="C#" to="/csharp">
-          </md-tab>
-          <md-tab id="tab-http" md-label="HTTP" to="/http">
-          </md-tab>
-          <md-tab id="tab-powershell" md-label="PowerShell" to="/powershell">
-          </md-tab>
-          <md-tab id="tab-java" md-label="Java" to="/java">
-          </md-tab>
-        </md-tabs>
-        <hr>
-        <router-view @copy-output-code="copyOutputCode" class="current-code-component"></router-view>
-      </md-content>
-    </md-content>
+              <v-divider class="my-4"></v-divider>
 
-    <md-snackbar :md-position="'center'" :md-duration="2000" :md-active.sync="snackBarState" md-persistent>
-      <span>{{snackBarText}}</span>
-      <md-button class="md-primary" @click="hideSnackBar">close</md-button>
-    </md-snackbar>
+              <router-view @copy-output-code="copyOutputCode" class="current-code-component"></router-view>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
 
-  </md-content>
+    <v-snackbar
+      v-model="store.snackBar.visible"
+      :timeout="2000"
+      location="center"
+    >
+      {{ store.snackBarText }}
+      <template v-slot:actions>
+        <v-btn
+          color="primary"
+          variant="text"
+          @click="store.hideSnackBar"
+        >
+          close
+        </v-btn>
+      </template>
+    </v-snackbar>
+  </v-app>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex'
+<script setup>
+import { ref, watch, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { useAppStore } from './store';
 import RequestInfoForm from "./components/RequestInfoForm.vue";
 import HeaderForm from "./components/HeaderForm.vue";
 import AppHeader from "./components/AppHeader.vue";
 
-export default {
-  computed: {
-    ...mapGetters([
-      'snackBarText'
-    ]),
-    snackBarState: {
-      get(){
-        return this.$store.getters.snackBarState;
-      },
-      set(value){
-        !value && this.hideSnackBar();
-      }
+const store = useAppStore();
+const route = useRoute();
+const activeTab = ref('response');
+
+// Sync activeTab with route
+watch(() => route.path, (path) => {
+  const segment = path.split('/')[1];
+  if (segment) {
+    activeTab.value = segment;
+  }
+}, { immediate: true });
+
+const copyOutputCode = async (copyText) => {
+  if (navigator.clipboard) {
+    try {
+      await navigator.clipboard.writeText(copyText);
+      store.showSnackBar('text copied successfully 💃💃💃');
+    } catch (err) {
+      store.showSnackBar('unable to copy text.. 😢');
+      console.error('Could not copy text: ', err);
     }
-  },
-  methods: {
-    ...mapActions(['hideSnackBar', 'showSnackBar']),
-    // TODO: This should be an async action
-    copyOutputCode: function (copyText) {
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(copyText)
-          .then(() => {
-            this.showSnackBar('text copied successfully 💃💃💃');
-          })
-          .catch(err => {
-            this.showSnackBar('unable to copy text.. 😢');
-            console.error('Could not copy text: ', err);
-          });
-      }
-      // TODO: Handle old browsers
-    }
-  },
-  components: {
-    RequestInfoForm,
-    HeaderForm,
-    AppHeader
   }
 };
+
+onMounted(() => {
+  store.getSavedRequest();
+});
 </script>
 
 <style lang="scss">
-@import "~vue-material/dist/theme/engine";
-
-@include md-register-theme("default", (primary: #ff4500, accent: #1a11e8));
-
-@import "~vue-material/dist/theme/all"; // Apply the theme
-
 body {
   overflow-x: hidden;
   .CodeMirror {
@@ -100,51 +100,14 @@ body {
     }
   }
 }
-
 </style>
 
 <style lang="scss" scoped>
-.app-header {
-  top: 0;
-  z-index: 6;
-
-  .app-logo {
-    margin: auto;
-    margin-left: 0px;
-
-    .md-icon {
-      width: 100px;
-    }
-  }
-}
-
 .app-container {
-  display: grid;
-  grid-template-columns: 30% 70%;
-  grid-template-rows: auto;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
-  margin: 10px;
-
-  .input-tab,
-  .output-tab {
-    padding: 10px;
-    height: auto;
-  }
-
-  .output-tab {
-    .current-code-component{
-      margin-top: 15px;
-    }
-  }
-
+  background-color: #f5f5f5;
 }
 
-@media only screen and (max-width: 800px) {
-  .app-container {
-    grid-template-columns: 100%;
-  }
+.current-code-component {
+  margin-top: 15px;
 }
 </style>
-
-

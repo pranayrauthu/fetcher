@@ -1,4 +1,5 @@
 
+import { describe, test, expect } from 'vitest';
 import { httpUrlConnectionCode } from './http-url-con-output-code';
 
 describe('JavaCode Tab httpUrlConnection tests', () => {

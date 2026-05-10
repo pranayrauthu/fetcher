@@ -1,50 +1,51 @@
 <template>
-    <div class="http-tab">
-        <div class="md-title">HTTP</div>
-        <md-content class="md-elevation-1">
-            <codemirror :value="outputCodeStr" :options="editorOptions"></codemirror>
-            <md-button class="md-primary" @click="$emit('copy-output-code', outputCodeStr)">copy</md-button>
-        </md-content>
-    </div>
+  <div class="http-tab">
+    <div class="text-h6 mb-2">HTTP</div>
+    <v-card variant="outlined" class="pa-4">
+      <codemirror
+        v-model="outputCodeStr"
+        :extensions="extensions"
+        disabled
+        :style="{ height: '400px' }"
+      />
+      <v-btn
+        color="primary"
+        class="mt-4"
+        @click="$emit('copy-output-code', outputCodeStr)"
+      >
+        copy
+      </v-btn>
+    </v-card>
+  </div>
 </template>
 
+<script setup>
+import { computed } from 'vue'
+import { Codemirror } from 'vue-codemirror'
+import { StreamLanguage } from '@codemirror/language'
+import { http } from '@codemirror/legacy-modes/mode/http'
+import { useAppStore } from '../store'
 
-<script>
+const store = useAppStore()
+const extensions = [StreamLanguage.define(http)]
 
-require('codemirror/mode/http/http');
-import { mapGetters } from 'vuex';
+const computedHeadersStr = computed(() => {
+  const headers = Object.keys(store.inputData.requestHeaders)
+  if (headers.length > 0) {
+    let returnStr = ''
+    headers.forEach(h => {
+      returnStr += `${h}: ${store.inputData.requestHeaders[h]}\n`
+    })
+    return returnStr
+  }
+  return ''
+})
 
-export default {
-    name: 'HttpCodeTab',
-    data: function () {
-        return {
-            editorOptions: {
-                mode: 'message/http',
-                tabSize: 2,
-                lineWrapping: true,
-                lineNumbers: true,
-                autoRefresh: true
-            }
-        }
-    },
-    computed: {
-        ...mapGetters(['inputData']),
-        outputCodeStr: function () {
-            return `${this.inputData.method} ${this.inputData.fetchUrl} HTTP/1.1\n${this.computedHeadersStr}\n\n${this.inputData.requestBody}`;
-        },
-        computedHeadersStr: function () {
-            const headers = Object.keys(this.inputData.requestHeaders);
-            if (headers.length > 0) {
-                let returnStr = "";
-                headers.forEach(h => {
-                    returnStr += `${h}: ${this.inputData.requestHeaders[h]}\n`;
-                });
-                return returnStr;
-            }
-            return "";
-        }
-    }
-}
+const outputCodeStr = computed(() => {
+  return `${store.inputData.method} ${store.inputData.fetchUrl} HTTP/1.1\n${computedHeadersStr.value}\n\n${store.inputData.requestBody}`
+})
+
+defineEmits(['copy-output-code'])
 </script>
 
 <style lang="scss" scoped>
@@ -52,4 +53,3 @@ export default {
   padding: 10px;
 }
 </style>
-

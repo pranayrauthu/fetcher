@@ -1,3 +1,4 @@
+import { describe, test, expect } from 'vitest';
 import { fetchCode, asyncAwaitCode } from './output-code';
 
 describe('JavaScript Fetch Api tests', () => {
